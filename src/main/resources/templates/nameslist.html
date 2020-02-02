@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Knight list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+    <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+<div class="container">
+    <h2>Imionator - pomoc w wyborze imienia dla dziecka</h2>
+    <p>Poniżej możesz wpisać wszystkie imiona, spośród których chcesz wybrać to jedyne.</p>
+    <p>Po wpisaniu wszystkich imion kliknij przycisk "Wylosuj imię". Imię możesz wybierać wiele razy.</p>
+    <p>Po wielokrotnym losowaniu naciśnij przycisk "Statystyka" - zobaczysz częstotliwość losowania imienia.</p>
+</div>
+<div class="container">
+    <!--Actual time <span th:text="${actualtime.time}"/>-->
+    <form class="form-horizontal" th:object="${name}" th:action="@{/names}" th:method="post">
+        <div class="form-group">
+            <label class="control-panel">Wpisz imię:</label>
+            <input type="text" class="form-control" th:field="*{firstName}"/>
+            <!--<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>-->
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-default">Dodaj imię do listy</button>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <table class="table-striped">
+        <thead>
+        <tr>
+            <td class="control-panel">Podane imiona</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="name : ${namesGivenByUser}">
+            <td th:text="${name.firstName}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <a href="/result">Wylosuj imię</a>
+    </div>
+    <div class="row">
+        <a href="/stats">Zobacz statystykę wylosowanych imion</a>
+    </div>
+</div>
+</body>
+</html>
