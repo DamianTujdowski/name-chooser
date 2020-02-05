@@ -8,22 +8,22 @@ import java.util.List;
 
 @Repository
 public class NamesRepository {
-    private List<Name> namesFromInput = new ArrayList<>();
-    private List<Name> namesFromDrawing = new ArrayList<>();
+    private List<Name> namesGivenByUser = new ArrayList<>();
+    private List<Name> namesDrawnByUser = new ArrayList<>();
 
-    public void addNameToInputList(Name name) {
-        namesFromInput.add(name);
+    public void addNameGivenByUser(Name name) {
+        namesGivenByUser.add(name);
     }
 
-    public void addNameToDrawingList(Name name) {
-        namesFromDrawing.add(name);
+    public void addNameDrawnByUser(Name name) {
+        namesDrawnByUser.add(name);
     }
 
-    public List<Name> getNamesFromInput() {
-        return namesFromInput;
+    public List<Name> getNamesGivenByUser() {
+        return namesGivenByUser;
     }
 
-    public List<Name> getNamesFromDrawing() {
-        return namesFromDrawing;
+    public List<Name> getNamesDrawnByUser() {
+        return namesDrawnByUser;
     }
 }

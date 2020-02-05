@@ -19,30 +19,30 @@ public class NamesService {
         this.namesRepository = namesRepository;
     }
 
-    public void saveNameToInputList(Name name) {
-        namesRepository.addNameToInputList(name);
+    public void saveNameGivenByUser(Name name) {
+        namesRepository.addNameGivenByUser(name);
     }
 
-    public void saveNameToDrawingList(Name name) {
-        namesRepository.addNameToDrawingList(name);
+    public void saveNameDrawnByUser(Name name) {
+        namesRepository.addNameDrawnByUser(name);
     }
 
     public List<Name> namesGivenByUser() {
-        return namesRepository.getNamesFromInput();
+        return namesRepository.getNamesGivenByUser();
     }
 
     public List<Name> namesDrawedByUser() {
-        return namesRepository.getNamesFromDrawing();
+        return namesRepository.getNamesDrawnByUser();
     }
 
     public Name nameDrawer() {
-        List<Name> names = namesRepository.getNamesFromInput();
+        List<Name> names = namesRepository.getNamesGivenByUser();
         Collections.shuffle(names);
         return names.get(0);
     }
 
-    public Map<String, Long> namesDrawStats() {
-        return namesRepository.getNamesFromDrawing()
+    public Map<String, Long> drawnNamesStatsMaker() {
+        return namesRepository.getNamesDrawnByUser()
                 .stream()
                 .map(Name::toString)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))

@@ -3,6 +3,7 @@ package pl.imionator.imionator.domain;
 public class Name {
 
     private String firstName;
+    private NameCategory nameCategory;
 
     public Name() {
     }
@@ -17,6 +18,14 @@ public class Name {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public NameCategory getNameCategory() {
+        return nameCategory;
+    }
+
+    public void setNameCategory(NameCategory nameCategory) {
+        this.nameCategory = nameCategory;
     }
 
     @Override
