@@ -13,12 +13,12 @@
 <body>
 <div class="container">
     <h2>Mamy dla Ciebie pomoc</h2>
-    <p>Wybierz kategorię, z jakiej wylosujemy dla Ciebie imię</p>
+    <p>Wybierz kategorię z listy poniżej, a Imionator wylosuje dla Ciebie imię</p>
     <div class="row">
         <form th:action="@{/randomResult}">
             <select name="name">
                 <option th:each="nameCategory : ${T(pl.imionator.imionator.domain.NameCategory).values()}"
-                        th:value="${nameCategory}" th:text="${nameCategory}"></option>
+                        th:value="${nameCategory}" th:text="${nameCategory.displayValue}"></option>
             </select>
             <!--<br><br>-->
             <div class="row">

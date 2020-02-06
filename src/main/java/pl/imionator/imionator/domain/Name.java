@@ -28,8 +28,4 @@ public class Name {
         this.nameCategory = nameCategory;
     }
 
-    @Override
-    public String toString() {
-        return firstName;
-    }
 }

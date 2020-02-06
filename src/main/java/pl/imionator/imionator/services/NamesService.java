@@ -3,11 +3,13 @@ package pl.imionator.imionator.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.imionator.imionator.domain.Name;
+import pl.imionator.imionator.domain.NameCategory;
 import pl.imionator.imionator.repository.NamesRepository;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class NamesService {
@@ -19,32 +21,34 @@ public class NamesService {
         this.namesRepository = namesRepository;
     }
 
-    public void saveNameGivenByUser(Name name) {
-        namesRepository.addNameGivenByUser(name);
-    }
-
-    public void saveNameDrawnByUser(Name name) {
-        namesRepository.addNameDrawnByUser(name);
-    }
-
-    public List<Name> namesGivenByUser() {
-        return namesRepository.getNamesGivenByUser();
-    }
-
-    public List<Name> namesDrawedByUser() {
-        return namesRepository.getNamesDrawnByUser();
-    }
-
-    public Name nameDrawer() {
+    public Name drawFromNamesGivenByUser() {
         List<Name> names = namesRepository.getNamesGivenByUser();
         Collections.shuffle(names);
         return names.get(0);
     }
 
-    public Map<String, Long> drawnNamesStatsMaker() {
+    //TODO refactor multiple conditionals
+    public Name drawNameFromGivenCategory(Name name) {
+        List<String> names = new ArrayList<>();
+        if (name.getNameCategory() == NameCategory.GIRL_UNUSUAL) {
+            names = namesRepository.getUnusualGirlNames();
+        } else if (name.getNameCategory() == NameCategory.GIRL_ORDINARY) {
+            names = namesRepository.getOrdinaryGirlNames();
+        } else if (name.getNameCategory() == NameCategory.GIRL_ALL_NAMES) {
+            names = Stream.concat(namesRepository.getUnusualGirlNames().stream(),
+                    namesRepository.getOrdinaryGirlNames().stream())
+                    .collect(Collectors.toList());
+        }
+
+        Collections.shuffle(names);
+        name.setFirstName(names.get(0));
+        return name;
+    }
+
+    public Map<String, Long> generateStatistics() {
         return namesRepository.getNamesDrawnByUser()
                 .stream()
-                .map(Name::toString)
+                .map(Name::getFirstName)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet()
                 .stream()
