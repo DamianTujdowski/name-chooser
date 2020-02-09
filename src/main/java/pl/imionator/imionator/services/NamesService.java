@@ -24,25 +24,38 @@ public class NamesService {
     public Name drawFromNamesGivenByUser() {
         List<Name> names = namesRepository.getNamesGivenByUser();
         Collections.shuffle(names);
-        return names.get(0);
+        return names.stream().findFirst().orElse(null);
     }
 
     //TODO refactor multiple conditionals
-    public Name drawNameFromGivenCategory(Name name) {
-        List<String> names = new ArrayList<>();
-        if (name.getNameCategory() == NameCategory.GIRL_UNUSUAL) {
-            names = namesRepository.getUnusualGirlNames();
-        } else if (name.getNameCategory() == NameCategory.GIRL_ORDINARY) {
-            names = namesRepository.getOrdinaryGirlNames();
-        } else if (name.getNameCategory() == NameCategory.GIRL_ALL_NAMES) {
-            names = Stream.concat(namesRepository.getUnusualGirlNames().stream(),
+    public Name drawNameFromGivenCategory() {
+        List<Name> namesDrawnFromCategory = namesRepository.getNamesDrawnByUser();
+        if (namesDrawnFromCategory.size() == 0) return null;
+//        Name nam = namesRepository.getNamesDrawnByUser().stream().reduce((first, second) -> second).orElse(null);
+        Name drawnName = namesDrawnFromCategory.get(namesDrawnFromCategory.size() - 1);
+        NameCategory nameCategory = drawnName.getNameCategory();
+        List<String> categoryNames;
+        if (nameCategory == NameCategory.GIRL_UNUSUAL) {
+            categoryNames = namesRepository.getUnusualGirlNames();
+        } else if (nameCategory == NameCategory.GIRL_ORDINARY) {
+            categoryNames = namesRepository.getOrdinaryGirlNames();
+        } else if (nameCategory == NameCategory.GIRL_ALL_NAMES) {
+            categoryNames = Stream.concat(namesRepository.getUnusualGirlNames().stream(),
                     namesRepository.getOrdinaryGirlNames().stream())
                     .collect(Collectors.toList());
+        } else if (nameCategory == NameCategory.BOY_UNUSUAL) {
+            categoryNames = namesRepository.getUnusualBoyNames();
+        } else if (nameCategory == NameCategory.BOY_ORDINARY) {
+            categoryNames = namesRepository.getOrdinaryBoyNames();
+        } else {
+            categoryNames = Stream.concat(namesRepository.getUnusualBoyNames().stream(),
+                    namesRepository.getOrdinaryBoyNames().stream())
+                    .collect(Collectors.toList());
         }
-
-        Collections.shuffle(names);
-        name.setFirstName(names.get(0));
-        return name;
+        //TODO prevent from drawing same name twice
+        Collections.shuffle(categoryNames);
+        drawnName.setFirstName(categoryNames.get(0));
+        return drawnName;
     }
 
     public Map<String, Long> generateStatistics() {

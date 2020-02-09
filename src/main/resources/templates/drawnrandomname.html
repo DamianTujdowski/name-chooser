@@ -15,8 +15,8 @@
     <h2>Mamy dla Ciebie pomoc</h2>
     <p>Wybierz kategorię z listy poniżej, a Imionator wylosuje dla Ciebie imię</p>
     <div class="row">
-        <form th:action="@{/randomResult}">
-            <select name="name">
+        <form class="form-horizontal" th:object="${randomName}" th:action="@{/randomResult}" th:method="post">
+            <select th:field="*{nameCategory}">
                 <option th:each="nameCategory : ${T(pl.imionator.imionator.domain.NameCategory).values()}"
                         th:value="${nameCategory}" th:text="${nameCategory.displayValue}"></option>
             </select>
@@ -25,6 +25,25 @@
                 <button type="submit" class="btn btn-default">Wylosuj</button>
             </div>
         </form>
+    </div>
+    <div class="row">
+        <table class="table-striped">
+            <thead>
+            <tr>
+                <th class="control-panel">Wylosowane imię</th>
+                <th class="control-panel">Kategoria imienia</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="name : ${drawnName}">
+                <td th:text="${name.firstName}"></td>
+                <td th:text="${name.nameCategory.displayValue}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <a href="/stats">Zobacz statystykę wylosowanych imion</a>
     </div>
     <div class="row">
         <a href="/names">Powrót na stronę główną</a>

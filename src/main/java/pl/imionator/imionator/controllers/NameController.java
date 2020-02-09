@@ -26,7 +26,6 @@ public class NameController {
     public String namesList(Model model) {
         model.addAttribute("namesGivenByUser", namesRepository.getNamesGivenByUser());
         model.addAttribute("name", new Name());
-//        model.addAttribute("nameCategory", new Name)
         return "main";
     }
 
@@ -46,15 +45,15 @@ public class NameController {
 
     @GetMapping("/randomResult")
     public String randomDrawResult(Model model) {
+        model.addAttribute("drawnName", namesService.drawNameFromGivenCategory());
         model.addAttribute("randomName", new Name());
         return "drawnrandomname";
     }
 
     @PostMapping("/randomResult")
     public String drawRandomName(Name name) {
-        //TODO implement logic responsible for drawing name based on name category
         namesRepository.saveNameDrawnByUser(name);
-        return "redirect:/drawnrandomname";
+        return "redirect:/randomResult";
     }
 
     @GetMapping("/stats")
