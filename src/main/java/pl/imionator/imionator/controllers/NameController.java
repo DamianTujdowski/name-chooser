@@ -24,14 +24,14 @@ public class NameController {
 
     @GetMapping("/names")
     public String namesList(Model model) {
-        model.addAttribute("namesGivenByUser", namesRepository.getNamesGivenByUser());
+        model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
         model.addAttribute("name", new Name());
         return "main";
     }
 
     @PostMapping("/names")
     public String saveName(Name name) {
-        namesRepository.saveNameGivenByUser(name);
+        namesRepository.saveUserInputName(name);
         return "redirect:/names";
     }
 
@@ -39,26 +39,27 @@ public class NameController {
     public String drawResult(Model model) {
         Name name = namesService.drawFromNamesGivenByUser();
         model.addAttribute("name", name);
-        namesRepository.saveNameDrawnByUser(name);
+        namesRepository.saveNameDrawnFromUserInput(name);
         return "drawnname";
     }
 
     @GetMapping("/randomResult")
     public String randomDrawResult(Model model) {
-        model.addAttribute("drawnName", namesService.drawNameFromGivenCategory());
+        model.addAttribute("drawnName", namesService.drawNameFromPropositionList());
         model.addAttribute("randomName", new Name());
         return "drawnrandomname";
     }
 
     @PostMapping("/randomResult")
     public String drawRandomName(Name name) {
-        namesRepository.saveNameDrawnByUser(name);
+        namesRepository.saveNameFromPropositionList(name);
         return "redirect:/randomResult";
     }
 
     @GetMapping("/stats")
     public String drawStats(Model model) {
-        model.addAttribute("statistics", namesService.generateStatistics());
+        model.addAttribute("statsFromUserInputDraw", namesService.generateStatisticsFromUserInputDraw());
+        model.addAttribute("statsFromPropositionListDraw", namesRepository.getNamesDrawnFromPropositionList());
         return "statistics";
     }
 }

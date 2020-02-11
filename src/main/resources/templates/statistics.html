@@ -23,9 +23,23 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="stats : ${statistics}">
+        <tr th:each="stats : ${statsFromUserInputDraw}">
             <td th:text="${stats.key}">Imię</td>
             <td th:text="${stats.value}">Ilość</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table-striped">
+        <thead>
+        <tr>
+            <th class="control-panel">Wylosowane imię</th>
+            <th class="control-panel">Kategoria imienia</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="name : ${statsFromPropositionListDraw}">
+            <td th:text="${name.firstName}"></td>
+            <td th:text="${name.nameCategory.displayValue}"></td>
         </tr>
         </tbody>
     </table>

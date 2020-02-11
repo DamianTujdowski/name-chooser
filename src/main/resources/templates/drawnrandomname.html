@@ -36,7 +36,7 @@
             </thead>
             <tbody>
             <tr th:each="name : ${drawnName}">
-                <td th:text="${name.firstName}"></td>
+                <td th:text="${name.firstName} ?: 'Wylosowałeś wszystkie możliwe imiona z kategori: '"></td>
                 <td th:text="${name.nameCategory.displayValue}"></td>
             </tr>
             </tbody>
