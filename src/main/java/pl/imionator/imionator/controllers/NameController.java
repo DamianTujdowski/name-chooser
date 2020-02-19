@@ -37,7 +37,7 @@ public class NameController {
 
     @GetMapping("/result")
     public String drawResult(Model model) {
-        Name name = namesService.drawFromNamesGivenByUser();
+        Name name = namesService.drawNameFromUserInput();
         model.addAttribute("name", name);
         namesRepository.saveNameDrawnFromUserInput(name);
         return "drawnname";
@@ -52,7 +52,7 @@ public class NameController {
 
     @PostMapping("/randomResult")
     public String drawRandomName(Name name) {
-        namesRepository.saveNameFromPropositionList(name);
+        namesRepository.saveNameDrawnFromPropositionList(name);
         return "redirect:/randomResult";
     }
 
