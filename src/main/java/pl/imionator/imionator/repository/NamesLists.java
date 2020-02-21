@@ -8,36 +8,60 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
+public
 class NamesLists {
     //TODO fill in names lists
 
-    static List<String> unusualGirlNames = new ArrayList<>();
+    private List<String> unusualGirlNames = new ArrayList<>();
 
-    static List<String> ordinaryGirlNames = new ArrayList<>();
-//    static final String[] ordinaryGirlNames = {"Monika", "Oliwia"};
+    private List<String> ordinaryGirlNames = new ArrayList<>();
 
-    static List<String> unusualBoyNames = new ArrayList<>();
-//    static final String[] unusualBoyNames = {"Adela", "Amanda"};
+    private List<String> unusualBoyNames = new ArrayList<>();
 
-    static List<String> ordinaryBoyNames = new ArrayList<>();
-//    static final String[] ordinaryBoyNames = {"Tomasz", "Karol"};
+    private List<String> ordinaryBoyNames = new ArrayList<>();
 
-    @PostConstruct
     List<String> getUnusualGirlNames() {
-        Collections.addAll(unusualGirlNames, "Adela", "Amanda");
+        boolean isNotInitialized = true;
+        if (isNotInitialized) {
+            isNotInitialized = false;
+            fillUnusualGirlNamesList();
+        }
         return unusualGirlNames;
     }
 
-    public static List<String> getOrdinaryGirlNames() {
-        Collections.addAll(unusualGirlNames, "Adela", "Amanda");
+    List<String> getOrdinaryGirlNames() {
+//        fillOrdinaryGirlNamesList();
         return ordinaryGirlNames;
     }
 
-    public static List<String> getUnusualBoyNames() {
+    List<String> getUnusualBoyNames() {
+//        fillUnusualBoyNamesList();
         return unusualBoyNames;
     }
 
-    public static List<String> getOrdinaryBoyNames() {
+    List<String> getOrdinaryBoyNames() {
+//        fillOrdinaryBoyNamesList();
         return ordinaryBoyNames;
     }
+
+    @PostConstruct
+    private void fillUnusualGirlNamesList() {
+        Collections.addAll(unusualGirlNames, "Adela", "Amanda");
+    }
+
+    @PostConstruct
+    private void fillOrdinaryGirlNamesList() {
+        Collections.addAll(ordinaryGirlNames, "Ada", "Adrianna");
+    }
+
+    @PostConstruct
+    private void fillUnusualBoyNamesList() {
+        Collections.addAll(unusualBoyNames, "Aaron", "Alfred");
+    }
+
+    @PostConstruct
+    private void fillOrdinaryBoyNamesList() {
+        Collections.addAll(ordinaryBoyNames, "Adam", "Adrian");
+    }
+
 }

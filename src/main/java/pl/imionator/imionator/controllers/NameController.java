@@ -45,13 +45,14 @@ public class NameController {
 
     @GetMapping("/randomResult")
     public String randomDrawResult(Model model) {
-        model.addAttribute("drawnName", namesService.drawNameFromPropositionList());
+        model.addAttribute("drawnName", namesService.getLastNameDrawnFromPropositionList());
         model.addAttribute("randomName", new Name());
         return "drawnrandomname";
     }
 
     @PostMapping("/randomResult")
     public String drawRandomName(Name name) {
+        name.setFirstName(namesService.getRandomNameFromGivenCategory(name.getNameCategory()));
         namesRepository.saveNameDrawnFromPropositionList(name);
         return "redirect:/randomResult";
     }

@@ -15,11 +15,18 @@ import java.util.stream.Stream;
 @Repository
 public class NamesRepository {
 
+    private NamesLists namesLists;
+
     private List<Name> userInput = new ArrayList<>();
 
     private List<Name> namesDrawnFromUserInput = new ArrayList<>();
 
     private List<Name> namesDrawnFromPropositionList = new ArrayList<>();
+
+    @Autowired
+    public NamesRepository(NamesLists namesLists) {
+        this.namesLists = namesLists;
+    }
 
     public void saveUserInputName(Name name) {
         userInput.add(name);
@@ -30,7 +37,7 @@ public class NamesRepository {
     }
 
     public void saveNameDrawnFromPropositionList(Name name) {
-        if (name.getNameCategory() != null) {
+        if (name.getFirstName() != null) {
             namesDrawnFromPropositionList.add(name);
         }
     }
@@ -50,24 +57,24 @@ public class NamesRepository {
     public List<String> getNamesFromGivenCategory(NameCategory nameCategory) {
         List<String> names;
         switch (nameCategory) {
-            case GIRL_UNUSUAL:
-                names = NamesLists.unusualGirlNames;
-                break;
             case GIRL_ORDINARY:
-                names = NamesLists.ordinaryGirlNames;
+                names = namesLists.getOrdinaryGirlNames();
+                break;
+            case GIRL_UNUSUAL:
+                names = namesLists.getUnusualGirlNames();
                 break;
             case GIRL_ALL_NAMES:
-                names = Stream.concat(NamesLists.unusualGirlNames.stream(), NamesLists.ordinaryGirlNames.stream())
+                names = Stream.concat(namesLists.getUnusualGirlNames().stream(), namesLists.getOrdinaryGirlNames().stream())
                         .collect(Collectors.toList());
                 break;
             case BOY_UNUSUAL:
-                names = NamesLists.unusualBoyNames;
+                names = namesLists.getUnusualBoyNames();
                 break;
             case BOY_ORDINARY:
-                names = NamesLists.ordinaryBoyNames;
+                names = namesLists.getOrdinaryBoyNames();
                 break;
             case BOY_ALL_NAMES:
-                names = Stream.concat(NamesLists.unusualBoyNames.stream(), NamesLists.ordinaryBoyNames.stream())
+                names = Stream.concat(namesLists.getUnusualBoyNames().stream(), namesLists.getOrdinaryBoyNames().stream())
                         .collect(Collectors.toList());
                 break;
             default:

@@ -26,15 +26,15 @@ public class NamesService {
         return names.stream().findFirst().orElse(null);
     }
 
-    public Name drawNameFromPropositionList() {
-        List<Name> namesDrawnFromGivenCategory = namesRepository.getNamesDrawnFromPropositionList();
-        if (namesDrawnFromGivenCategory.size() == 0) return null;
-        Name drawnName = namesDrawnFromGivenCategory.get(namesDrawnFromGivenCategory.size() - 1);
-        drawnName.setFirstName(getRandomNameFromGivenCategory(drawnName.getNameCategory()));
-        return drawnName;
+    //TODO make randomResult page display info when proposition names list from given category is empty
+    public Name getLastNameDrawnFromPropositionList() {
+        return namesRepository.getNamesDrawnFromPropositionList()
+                .stream()
+                .reduce((first, second) -> second)
+                .orElse(null);
     }
 
-    private String getRandomNameFromGivenCategory(NameCategory nameCategory) {
+    public String getRandomNameFromGivenCategory(NameCategory nameCategory) {
         List<String> namesFromGivenCategory = namesRepository.getNamesFromGivenCategory(nameCategory);
         Collections.shuffle(namesFromGivenCategory);
         return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : null;
