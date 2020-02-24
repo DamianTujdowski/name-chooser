@@ -8,8 +8,13 @@ public class Name {
     public Name() {
     }
 
-    public Name(String name) {
-        this.firstName = name;
+    public Name(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Name(String firstName, NameCategory nameCategory) {
+        this.firstName = firstName;
+        this.nameCategory = nameCategory;
     }
 
     public String getFirstName() {
@@ -27,5 +32,4 @@ public class Name {
     public void setNameCategory(NameCategory nameCategory) {
         this.nameCategory = nameCategory;
     }
-
 }

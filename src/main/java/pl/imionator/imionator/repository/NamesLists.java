@@ -1,65 +1,86 @@
 package pl.imionator.imionator.repository;
 
 import org.springframework.stereotype.Component;
+import pl.imionator.imionator.domain.NameCategory;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public
 class NamesLists {
     //TODO fill in names lists
 
-    private List<String> unusualGirlNames = new ArrayList<>();
+    private List<String> unusualGirlNames;
 
-    private List<String> ordinaryGirlNames = new ArrayList<>();
+    private List<String> ordinaryGirlNames;
 
-    private List<String> unusualBoyNames = new ArrayList<>();
+    private List<String> unusualBoyNames;
 
-    private List<String> ordinaryBoyNames = new ArrayList<>();
+    private List<String> ordinaryBoyNames;
 
     List<String> getUnusualGirlNames() {
-        boolean isNotInitialized = true;
-        if (isNotInitialized) {
-            isNotInitialized = false;
-            fillUnusualGirlNamesList();
-        }
-        return unusualGirlNames;
+        return initialize(unusualGirlNames, "unusualGirlNames");
     }
 
     List<String> getOrdinaryGirlNames() {
-//        fillOrdinaryGirlNamesList();
-        return ordinaryGirlNames;
+        return initialize(ordinaryGirlNames, "ordinaryGirlNames");
     }
 
     List<String> getUnusualBoyNames() {
-//        fillUnusualBoyNamesList();
-        return unusualBoyNames;
+        return initialize(unusualBoyNames, "unusualBoyNames");
     }
 
     List<String> getOrdinaryBoyNames() {
-//        fillOrdinaryBoyNamesList();
-        return ordinaryBoyNames;
+        return initialize(ordinaryBoyNames, "ordinaryBoyNames");
     }
 
-    @PostConstruct
+    private List<String> initialize(List<String> list, String listName) {
+        if (list == null) {
+            switch (listName) {
+                case "unusualGirlNames":
+                    unusualGirlNames = new ArrayList<>();
+                    fillUnusualGirlNamesList();
+                    list = unusualGirlNames;
+                    break;
+                case "ordinaryGirlNames":
+                    ordinaryGirlNames = new ArrayList<>();
+                    fillOrdinaryGirlNamesList();
+                    list = ordinaryGirlNames;
+                    break;
+                case "unusualBoyNames":
+                    unusualBoyNames = new ArrayList<>();
+                    fillUnusualBoyNamesList();
+                    list = unusualBoyNames;
+                    break;
+                case "ordinaryBoyNames":
+                    ordinaryBoyNames = new ArrayList<>();
+                    fillOrdinaryBoyNamesList();
+                    list = ordinaryBoyNames;
+                    break;
+            }
+            return list;
+        } else {
+            return list;
+        }
+    }
+
     private void fillUnusualGirlNamesList() {
         Collections.addAll(unusualGirlNames, "Adela", "Amanda");
     }
 
-    @PostConstruct
     private void fillOrdinaryGirlNamesList() {
         Collections.addAll(ordinaryGirlNames, "Ada", "Adrianna");
     }
 
-    @PostConstruct
     private void fillUnusualBoyNamesList() {
         Collections.addAll(unusualBoyNames, "Aaron", "Alfred");
     }
 
-    @PostConstruct
     private void fillOrdinaryBoyNamesList() {
         Collections.addAll(ordinaryBoyNames, "Adam", "Adrian");
     }

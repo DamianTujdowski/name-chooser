@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,9 +34,7 @@ public class NamesRepository {
     }
 
     public void saveNameDrawnFromPropositionList(Name name) {
-        if (name.getFirstName() != null) {
             namesDrawnFromPropositionList.add(name);
-        }
     }
 
     public List<Name> getUserInput() {
@@ -82,4 +77,5 @@ public class NamesRepository {
         }
         return names;
     }
+
 }

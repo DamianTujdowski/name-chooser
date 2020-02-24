@@ -40,6 +40,12 @@ public class NamesService {
         return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : null;
     }
 
+    public List<Name> generateStatisticsFromPropositionListDraw() {
+        return namesRepository.getNamesDrawnFromPropositionList().stream()
+                .filter(name -> name.getFirstName() != null)
+                .collect(Collectors.toList());
+    }
+
     public Map<String, Long> generateStatisticsFromUserInputDraw() {
         return namesRepository.getNamesDrawnFromUserInput()
                 .stream()
