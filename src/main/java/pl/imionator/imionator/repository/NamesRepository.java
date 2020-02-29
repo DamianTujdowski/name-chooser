@@ -20,7 +20,6 @@ public class NamesRepository {
 
     private List<Name> namesDrawnFromPropositionList = new ArrayList<>();
 
-    @Autowired
     public NamesRepository(NamesLists namesLists) {
         this.namesLists = namesLists;
     }
@@ -33,8 +32,18 @@ public class NamesRepository {
         namesDrawnFromUserInput.add(name);
     }
 
+    public void deleteLastAddedName() {
+        int size = userInput.size();
+        if (size > 0) {
+            userInput.remove(size - 1);
+        }
+    }
+
     public void saveNameDrawnFromPropositionList(Name name) {
+        int size = namesDrawnFromPropositionList.size();
+        if (size < 1 || namesDrawnFromPropositionList.get(size - 1).getFirstName() != null || name.getFirstName() != null) {
             namesDrawnFromPropositionList.add(name);
+        }
     }
 
     public List<Name> getUserInput() {
@@ -77,5 +86,4 @@ public class NamesRepository {
         }
         return names;
     }
-
 }

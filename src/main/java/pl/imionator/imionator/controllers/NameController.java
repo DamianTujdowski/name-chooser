@@ -3,11 +3,15 @@ package pl.imionator.imionator.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.repository.NamesRepository;
 import pl.imionator.imionator.services.NamesService;
+
+import javax.validation.Valid;
+import java.text.Bidi;
 
 @Controller
 public class NameController {
@@ -16,7 +20,6 @@ public class NameController {
 
     private NamesRepository namesRepository;
 
-    @Autowired
     public NameController(NamesService namesService, NamesRepository namesRepository) {
         this.namesService = namesService;
         this.namesRepository = namesRepository;
@@ -30,8 +33,18 @@ public class NameController {
     }
 
     @PostMapping("/names")
-    public String saveName(Name name) {
+    public String saveName(@Valid Name name, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
+            return "main";
+        }
         namesRepository.saveUserInputName(name);
+        return "redirect:/names";
+    }
+
+    @GetMapping("/deleteName")
+    public String deleteLastNameFromUserInput() {
+        namesRepository.deleteLastAddedName();
         return "redirect:/names";
     }
 
@@ -60,7 +73,7 @@ public class NameController {
     @GetMapping("/stats")
     public String drawStats(Model model) {
         model.addAttribute("statsFromUserInputDraw", namesService.generateStatisticsFromUserInputDraw());
-        model.addAttribute("statsFromPropositionListDraw", namesRepository.getNamesDrawnFromPropositionList());
+        model.addAttribute("statsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw());
         return "statistics";
     }
 }

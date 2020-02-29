@@ -15,7 +15,6 @@ public class NamesService {
 
     private NamesRepository namesRepository;
 
-    @Autowired
     public NamesService(NamesRepository namesRepository) {
         this.namesRepository = namesRepository;
     }
@@ -26,7 +25,6 @@ public class NamesService {
         return names.stream().findFirst().orElse(null);
     }
 
-    //TODO make randomResult page display info when proposition names list from given category is empty
     public Name getLastNameDrawnFromPropositionList() {
         return namesRepository.getNamesDrawnFromPropositionList()
                 .stream()
