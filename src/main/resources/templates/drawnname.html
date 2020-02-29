@@ -11,12 +11,17 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-horizontal" th:object="${name}" th:action="@{/result}">
-        <div class="form-group">
-            <label class="control-panel">Wylosowane imię:</label>
-            <input type="text" class="form-control" th:field="*{firstName}"/>
-        </div>
-    </form>
+    <div th:if="${name != null}">
+        <form class="form-horizontal" th:object="${name}" th:action="@{/result}">
+            <div class="form-group">
+                <label class="control-panel">Wylosowane imię:</label>
+                <input type="text" class="form-control" th:field="*{firstName}"/>
+            </div>
+        </form>
+    </div>
+    <div th:if="${name == null}">
+        <p>Nie podałeś zadnego imienia. Wróć na stronę główną</p>
+    </div>
     <div class="row">
         <a href="/result">Wylosuj kolejne imię</a>
     </div>

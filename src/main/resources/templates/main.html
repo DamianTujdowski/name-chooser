@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Knight list</title>
+    <title>Imionator</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
@@ -23,7 +23,7 @@
         <div class="form-group">
             <label class="control-panel">Wpisz imię:</label>
             <input type="text" class="form-control" th:field="*{firstName}"/>
-            <!--<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>-->
+            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" />
         </div>
         <div class="row">
             <button type="submit" class="btn btn-default">Dodaj imię do listy</button>
@@ -43,6 +43,9 @@
         </tr>
         </tbody>
     </table>
+    <div class="row">
+        <a th:href="@{/deleteName}">Usuń ostatnie dodane imię</a>
+    </div>
     <div class="row">
         <a href="/result">Wylosuj imię spośród podanych</a>
     </div>
