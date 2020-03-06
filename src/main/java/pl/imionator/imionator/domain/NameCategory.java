@@ -10,7 +10,7 @@ public enum NameCategory {
 
     private final String displayValue;
 
-    private NameCategory(String displayValue) {
+    NameCategory(String displayValue) {
         this.displayValue=displayValue;
     }
 
