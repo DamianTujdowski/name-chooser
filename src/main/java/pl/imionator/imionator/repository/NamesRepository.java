@@ -67,19 +67,23 @@ public class NamesRepository {
             case GIRL_UNUSUAL:
                 names = namesLists.getUnusualGirlNames();
                 break;
-            case GIRL_ALL_NAMES:
-                names = Stream.concat(namesLists.getUnusualGirlNames().stream(), namesLists.getOrdinaryGirlNames().stream())
-                        .collect(Collectors.toList());
+            case GIRL_MODERN:
+                names = namesLists.getModernGirlNames();
                 break;
-            case BOY_UNUSUAL:
-                names = namesLists.getUnusualBoyNames();
+            case GIRL_OLD_FASHIONED:
+                names = namesLists.getOldFashionedGirlNames();
                 break;
             case BOY_ORDINARY:
                 names = namesLists.getOrdinaryBoyNames();
                 break;
-            case BOY_ALL_NAMES:
-                names = Stream.concat(namesLists.getUnusualBoyNames().stream(), namesLists.getOrdinaryBoyNames().stream())
-                        .collect(Collectors.toList());
+            case BOY_UNUSUAL:
+                names = namesLists.getUnusualBoyNames();
+                break;
+            case BOY_MODERN:
+                names = namesLists.getModernBoyNames();
+                break;
+            case BOY_OLD_FASHIONED:
+                names = namesLists.getOldFashionedBoyNames();
                 break;
             default:
                 names = new ArrayList<>();
