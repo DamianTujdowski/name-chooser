@@ -1,18 +1,16 @@
 package pl.imionator.imionator.domain;
 
-public enum NameCategory {
-    ORDINARY("Popularne"),
-    UNUSUAL("Oryginalne"),
-    MODERN("Nowoczesne"),
-    OLD_FASHIONED("Staromodne");
+public enum Sex {
+    BOY("Chłopiec"),
+    GIRL("Dziewczynka");
 
     private final String displayValue;
 
-    NameCategory(String displayValue) {
+    Sex(String displayValue) {
         this.displayValue = displayValue;
     }
 
     public String getDisplayValue() {
         return displayValue;
     }
-    }
+}

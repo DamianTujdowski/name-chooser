@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
+import pl.imionator.imionator.domain.Sex;
 import pl.imionator.imionator.repository.NamesRepository;
 
 import java.util.*;
@@ -32,8 +33,8 @@ public class NamesService {
                 .orElse(null);
     }
 
-    public String getRandomNameFromGivenCategory(NameCategory nameCategory) {
-        List<String> namesFromGivenCategory = namesRepository.getNamesFromGivenCategory(nameCategory);
+    public String getRandomNameFromGivenCategory(NameCategory nameCategory, Sex sex) {
+        List<String> namesFromGivenCategory = namesRepository.getNamesFromGivenCategory(sex, nameCategory);
         Collections.shuffle(namesFromGivenCategory);
         return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : null;
     }

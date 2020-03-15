@@ -65,7 +65,7 @@ public class NameController {
 
     @PostMapping("/randomResult")
     public String drawRandomName(Name name) {
-        name.setFirstName(namesService.getRandomNameFromGivenCategory(name.getNameCategory()));
+        name.setFirstName(namesService.getRandomNameFromGivenCategory(name.getNameCategory(), name.getSex()));
         namesRepository.saveNameDrawnFromPropositionList(name);
         return "redirect:/randomResult";
     }

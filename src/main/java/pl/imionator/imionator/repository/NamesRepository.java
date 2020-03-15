@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
+import pl.imionator.imionator.domain.Sex;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -58,35 +59,51 @@ public class NamesRepository {
         return namesDrawnFromPropositionList;
     }
 
-    public List<String> getNamesFromGivenCategory(NameCategory nameCategory) {
-        List<String> names;
+    public List<String> getNamesFromGivenCategory(Sex sex, NameCategory nameCategory) {
+        List<String> names = new ArrayList<>();
+        switch (sex) {
+            case GIRL:
+                names = setGirlNamesList(nameCategory, names);
+                break;
+            case BOY:
+                names = setBoyNamesList(nameCategory, names);
+                break;
+        }
+        return names;
+    }
+
+    private List<String> setBoyNamesList(NameCategory nameCategory, List<String> names) {
         switch (nameCategory) {
-            case GIRL_ORDINARY:
-                names = namesLists.getOrdinaryGirlNames();
-                break;
-            case GIRL_UNUSUAL:
-                names = namesLists.getUnusualGirlNames();
-                break;
-            case GIRL_MODERN:
-                names = namesLists.getModernGirlNames();
-                break;
-            case GIRL_OLD_FASHIONED:
-                names = namesLists.getOldFashionedGirlNames();
-                break;
-            case BOY_ORDINARY:
+            case ORDINARY:
                 names = namesLists.getOrdinaryBoyNames();
                 break;
-            case BOY_UNUSUAL:
+            case UNUSUAL:
                 names = namesLists.getUnusualBoyNames();
                 break;
-            case BOY_MODERN:
+            case MODERN:
                 names = namesLists.getModernBoyNames();
                 break;
-            case BOY_OLD_FASHIONED:
+            case OLD_FASHIONED:
                 names = namesLists.getOldFashionedBoyNames();
                 break;
-            default:
-                names = new ArrayList<>();
+        }
+        return names;
+    }
+
+    private List<String> setGirlNamesList(NameCategory nameCategory, List<String> names) {
+        switch (nameCategory) {
+            case ORDINARY:
+                names = namesLists.getOrdinaryGirlNames();
+                break;
+            case UNUSUAL:
+                names = namesLists.getUnusualGirlNames();
+                break;
+            case MODERN:
+                names = namesLists.getModernGirlNames();
+                break;
+            case OLD_FASHIONED:
+                names = namesLists.getOldFashionedGirlNames();
+                break;
         }
         return names;
     }

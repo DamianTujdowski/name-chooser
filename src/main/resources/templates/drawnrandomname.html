@@ -15,13 +15,28 @@
     <h2>Mamy dla Ciebie pomoc</h2>
     <p>Wybierz kategorię z listy poniżej, a Imionator wylosuje dla Ciebie imię</p>
     <div class="row">
-        <form class="form-horizontal" th:object="${randomName}" th:action="@{/randomResult}" th:method="post">
-            <select id="nameCategory" name="nameCategory">
-                <option th:each="nameCategory : ${T(pl.imionator.imionator.domain.NameCategory).values()}"
-                        th:value="${nameCategory}"
-                        th:text="${nameCategory.displayValue}"
-                        th:attr="selected=${drawnName != null} ? (${nameCategory == drawnName.nameCategory})"></option>
-            </select>
+        <form th:object="${randomName}" th:action="@{/randomResult}" th:method="post">
+
+            <div class="form-group">
+                <label for="sex">Wybierz płeć</label>
+                <select class="form-control selectpicker" id="sex" name="sex">
+                    <option th:each="sex : ${T(pl.imionator.imionator.domain.Sex).values()}"
+                            th:value="${sex}"
+                            th:text="${sex.displayValue}"
+                            th:attr="selected=${drawnName != null} ? (${sex == drawnName.sex})"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nameCategory">Wybierz kategorię</label>
+                <select class="form-control selectpicker" id="nameCategory" name="nameCategory">
+                    <option th:each="nameCategory : ${T(pl.imionator.imionator.domain.NameCategory).values()}"
+                            th:value="${nameCategory}"
+                            th:text="${nameCategory.displayValue}"
+                            th:attr="selected=${drawnName != null} ? (${nameCategory == drawnName.nameCategory})"></option>
+                </select>
+            </div>
+
             <div class="row">
                 <button type="submit" class="btn btn-default">Wylosuj</button>
             </div>
