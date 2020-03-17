@@ -34,12 +34,14 @@
         <tr>
             <th class="control-panel">Wylosowane imię</th>
             <th class="control-panel">Kategoria imienia</th>
+            <th class="control-panel"></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="name : ${statsFromPropositionListDraw}">
             <td th:text="${name.firstName}"></td>
             <td th:text="${name.nameCategory.displayValue}"></td>
+            <td><a th:href="${'/deleteName/'+name.firstName}">Usuń imię</a></td>
         </tr>
         </tbody>
     </table>

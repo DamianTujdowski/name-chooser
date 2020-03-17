@@ -170,7 +170,7 @@ class NamesLists {
 
     private void fillOrdinaryBoyNamesList() {
         Collections.addAll(ordinaryBoyNames, "Adam", "Adrian", "Albert", "Aleksander", "Alfred", "Andrzej",
-                "Antoni", "Ariel", "Arkadiusz", "Arnold", "Artur", "August", "Bartłomiej", "Bartosz", "Bernard", "Błążej",
+                "Antoni", "Ariel", "Arkadiusz", "Arnold", "Artur", "August", "Bartłomiej", "Bartosz", "Bernard", "Błażej",
                 "Bogdan", "Bogumił", "Bogusław", "Bogusz", "Borys", "Bożydar", "Cecyl", "Cezary", "Cyprian", "Cyryl",
                 "Czesław", "Damian", "Daniel", "Dariusz", "Dawid", "Dominik", "Donald", "Dorian", "Edmund", "Edward",
                 "Emil", "Eugeniusz", "Eryk", "Fabian", "Filip", "Florian", "Gabriel", "Gaweł", "Gracjan", "Grzegorz",

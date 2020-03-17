@@ -47,6 +47,14 @@ public class NamesRepository {
         }
     }
 
+    public void deleteNameDrawnFromPropositionList(String name) {
+        Name nameToRemove = namesDrawnFromPropositionList.stream()
+                .filter(n -> n.getFirstName().equals(name))
+                .findFirst()
+                .orElse(new Name());
+        namesDrawnFromPropositionList.remove(nameToRemove);
+    }
+
     public List<Name> getUserInput() {
         return userInput;
     }

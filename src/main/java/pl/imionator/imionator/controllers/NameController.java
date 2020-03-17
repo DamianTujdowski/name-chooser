@@ -1,17 +1,16 @@
 package pl.imionator.imionator.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.repository.NamesRepository;
 import pl.imionator.imionator.services.NamesService;
 
 import javax.validation.Valid;
-import java.text.Bidi;
 
 @Controller
 public class NameController {
@@ -29,20 +28,20 @@ public class NameController {
     public String namesList(Model model) {
         model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
         model.addAttribute("name", new Name());
-        return "main";
+        return "index";
     }
 
     @PostMapping("/names")
     public String saveName(@Valid Name name, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
-            return "main";
+            return "index";
         }
         namesRepository.saveUserInputName(name);
         return "redirect:/names";
     }
 
-    @GetMapping("/deleteName")
+    @GetMapping("/deleteLastName")
     public String deleteLastNameFromUserInput() {
         namesRepository.deleteLastAddedName();
         return "redirect:/names";
@@ -76,4 +75,11 @@ public class NameController {
         model.addAttribute("statsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw());
         return "statistics";
     }
+
+    @GetMapping("/deleteName/{firstName}")
+    public String deleteNameDrawnFromPropositionList(@PathVariable(name = "firstName") String name) {
+        namesRepository.deleteNameDrawnFromPropositionList(name);
+        return "redirect:/stats";
+    }
+
 }
