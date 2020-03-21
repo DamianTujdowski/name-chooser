@@ -1,5 +1,9 @@
 package pl.imionator.imionator.controllers;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.repository.NamesRepository;
 import pl.imionator.imionator.services.NamesService;
+import pl.imionator.imionator.utils.PdfGenerator;
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 
 @Controller
 public class NameController {
@@ -19,20 +25,23 @@ public class NameController {
 
     private NamesRepository namesRepository;
 
-    public NameController(NamesService namesService, NamesRepository namesRepository) {
+    private PdfGenerator pdfGenerator;
+
+    public NameController(NamesService namesService, NamesRepository namesRepository, PdfGenerator pdfGenerator) {
         this.namesService = namesService;
         this.namesRepository = namesRepository;
+        this.pdfGenerator = pdfGenerator;
     }
 
     @GetMapping("/names")
     public String namesList(Model model) {
         model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
-        model.addAttribute("name", new Name());
+        model.addAttribute("name", new pl.imionator.imionator.domain.Name());
         return "index";
     }
 
     @PostMapping("/names")
-    public String saveName(@Valid Name name, BindingResult bindingResult, Model model) {
+    public String saveName(@Valid pl.imionator.imionator.domain.Name name, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
             return "index";
@@ -49,7 +58,7 @@ public class NameController {
 
     @GetMapping("/result")
     public String drawResult(Model model) {
-        Name name = namesService.drawNameFromUserInput();
+        pl.imionator.imionator.domain.Name name = namesService.drawNameFromUserInput();
         model.addAttribute("name", name);
         namesRepository.saveNameDrawnFromUserInput(name);
         return "drawnname";
@@ -80,6 +89,18 @@ public class NameController {
     public String deleteNameDrawnFromPropositionList(@PathVariable(name = "firstName") String name) {
         namesRepository.deleteNameDrawnFromPropositionList(name);
         return "redirect:/stats";
+    }
+
+    @GetMapping(value = "/stats/getResults", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> namesPdf() {
+        ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(namesService.generateStatisticsFromPropositionListDraw());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=drawnnames.pdf");
+        return ResponseEntity.ok()
+                .header(String.valueOf(headers))
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(byteArrayInputStream));
     }
 
 }
