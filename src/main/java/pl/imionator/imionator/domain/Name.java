@@ -5,8 +5,8 @@ import javax.validation.constraints.Size;
 
 public class Name {
 
-    @Size(min = 3, max = 25, message = "Imię musi posiadać od 3 do 25 liter")
-    @Pattern(regexp = "[a-zA-Z]*", message = "Podałeś znak niewystęoujący w imionach. Dozwolone są tylko litery alfabetu")
+    @Size(min = 3, max = 25, message = "Imię musi posiadać od 3 do 25 liter.")
+    @Pattern(regexp = "[a-zA-Z]*", message = "Podałeś znak niewystępujący w imionach. Dozwolone są tylko litery alfabetu.")
     private String firstName;
 
     private Sex sex;

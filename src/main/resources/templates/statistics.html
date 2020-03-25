@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Knight list</title>
+    <title>Imionator</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
@@ -47,6 +47,9 @@
     </table>
     <div class="row">
         <a href="/names">Powrót na stronę wyboru imion</a>
+    </div>
+    <div th:if="${(statsFromUserInputDraw.size() > 0) or (statsFromPropositionListDraw.size() > 0)}" class="row">
+        <a href="/stats/getResults">Wygeneruj PDF-a z wylosowanymi imionami</a>
     </div>
 </div>
 </body>

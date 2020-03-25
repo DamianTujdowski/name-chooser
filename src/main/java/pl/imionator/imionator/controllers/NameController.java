@@ -93,7 +93,8 @@ public class NameController {
 
     @GetMapping(value = "/stats/getResults", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> namesPdf() {
-        ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(namesService.generateStatisticsFromPropositionListDraw());
+        ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(namesService.generateStatisticsFromUserInputDraw(),
+                namesService.generateStatisticsFromPropositionListDraw());
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=drawnnames.pdf");
