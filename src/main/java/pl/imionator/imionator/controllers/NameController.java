@@ -41,7 +41,7 @@ public class NameController {
     }
 
     @PostMapping("/names")
-    public String saveName(@Valid pl.imionator.imionator.domain.Name name, BindingResult bindingResult, Model model) {
+    public String saveName(@Valid Name name, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
             return "index";
@@ -58,7 +58,7 @@ public class NameController {
 
     @GetMapping("/result")
     public String drawResult(Model model) {
-        pl.imionator.imionator.domain.Name name = namesService.drawNameFromUserInput();
+        Name name = namesService.drawNameFromUserInput();
         model.addAttribute("name", name);
         namesRepository.saveNameDrawnFromUserInput(name);
         return "drawnname";
