@@ -36,6 +36,7 @@ public class NameController {
     @GetMapping("/names")
     public String namesList(Model model) {
         model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
+        model.addAttribute("namesDrawnFromUserInput", namesRepository.getNamesDrawnFromUserInput());
         model.addAttribute("name", new pl.imionator.imionator.domain.Name());
         return "index";
     }

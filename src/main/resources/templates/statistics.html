@@ -12,14 +12,19 @@
 </head>
 <body>
 <div class="container">
-    <h3>Statystyka wylosowanych imion</h3>
+    <p class="instructions-font-style">Statystyka wylosowanych imion</p>
+    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small" alt="Noworodek"/>
+    <p th:if="${statsFromUserInputDraw.size() == 0 and statsFromPropositionListDraw.size() == 0}"
+       class="instructions-font-style margin-small">Nie wylosowano jeszcze żadnego imienia</p>
 </div>
 <div class="container">
-    <table class="table-striped">
+    <p th:if="${statsFromUserInputDraw.size() > 0}"
+       class="instructions-font-style margin-small">Wynik losowania spośród imion podanych przez Ciebie:</p>
+    <table th:if="${statsFromUserInputDraw.size() > 0}">
         <thead>
         <tr>
-            <td class="control-panel">Wylosowane imię</td>
-            <td class="control-panel">Ilość wylosowań</td>
+            <th>Wylosowane imię</th>
+            <th>Ilość wylosowań</th>
         </tr>
         </thead>
         <tbody>
@@ -29,27 +34,28 @@
         </tr>
         </tbody>
     </table>
-    <table class="table-striped">
+    <p th:if="${statsFromPropositionListDraw.size() > 0}"
+       class="instructions-font-style">Imiona wylosowane z kategorii wybranych przez Ciebie:</p>
+    <table th:if="${statsFromPropositionListDraw.size() > 0}">
         <thead>
         <tr>
-            <th class="control-panel">Wylosowane imię</th>
-            <th class="control-panel">Kategoria imienia</th>
-            <th class="control-panel"></th>
+            <th>Wylosowane imię</th>
+            <th>Kategoria imienia</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="name : ${statsFromPropositionListDraw}">
             <td th:text="${name.firstName}"></td>
             <td th:text="${name.nameCategory.displayValue}"></td>
-            <td><a th:href="${'/deleteName/'+name.firstName}">Usuń imię</a></td>
+            <td><a class="btn btn-primary" role="button" th:href="${'/deleteName/'+name.firstName}">
+                Usuń imię</a></td>
         </tr>
         </tbody>
     </table>
-    <div class="row">
-        <a href="/names">Powrót na stronę wyboru imion</a>
-    </div>
-    <div th:if="${(statsFromUserInputDraw.size() > 0) or (statsFromPropositionListDraw.size() > 0)}" class="row">
-        <a href="/stats/getResults">Wygeneruj PDF-a z wylosowanymi imionami</a>
+    <div class="btn-group btn-group-vertical">
+        <a href="/names" class="btn btn-primary" role="button">Powrót na stronę główną</a>
+        <a th:if="${(statsFromUserInputDraw.size() > 0) or (statsFromPropositionListDraw.size() > 0)}"
+           href="/stats/getResults" class="btn btn-primary" role="button">Wygeneruj PDF-a z wylosowanymi imionami</a>
     </div>
 </div>
 </body>

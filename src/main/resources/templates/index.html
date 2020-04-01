@@ -13,8 +13,7 @@
 <body>
 <div class="container">
     <h3>Imionator - pomoc w wyborze imienia dla dziecka</h3>
-    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border" alt="Noworodek" width="422"
-         height="364"/>
+    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-big" alt="Noworodek"/>
 
     <pre>
         Chodzą Tobie po głowie różne imiona dla twojego dziecka? Nie możesz zdecydować się na
@@ -25,7 +24,7 @@
 
     <form class="form-horizontal" th:object="${name}" th:action="@{/names}" th:method="post">
         <div class="form-group">
-            <label class="control-label">Wpisz imię:</label>
+            <label class="instructions-font-style">Wpisz imię:</label>
             <input type="text" class="form-control" th:field="*{firstName}"/>
             <p class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
         </div>
@@ -48,15 +47,15 @@
         </tbody>
     </table>
 
-    <div class="btn-group btn-group-vertical">
-        <a th:if="${namesGivenByUser.size() == 0}" href="/names" class="btn btn-primary" role="button">
-            Usuń ostatnie dodane imię <span class="glyphicon glyphicon-remove-sign"></span></a>
-        <a th:if="${namesGivenByUser.size() > 0}" href="/deleteLastName" class="btn btn-primary" role="button">
+    <div th:if="${namesGivenByUser.size() > 0 or namesDrawnFromUserInput.size() > 0}" class="btn-group btn-group-vertical">
+        <a href="/deleteLastName" class="btn btn-primary" role="button">
             Usuń ostatnie dodane imię <span class="glyphicon glyphicon-remove-sign "></span></a>
         <a href="/result" class="btn btn-primary" role="button">
             Wylosuj imię <span class="glyphicon glyphicon-download-alt"></span></a>
         <a href="/stats" class="btn btn-primary" role="button">
             Zobacz statystykę wylosowanych imion <span class="glyphicon glyphicon-signal"></span></a>
+    </div>
+    <div>
         <p class="instructions-font-style margin">Nie masz pomysłu na imię?</p>
         <a href="/randomResult" class="btn btn-primary" role="button">
             Kliknij tutaj <span class="glyphicon glyphicon-exclamation-sign"></span></a>
