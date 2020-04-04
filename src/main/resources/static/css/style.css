@@ -121,6 +121,13 @@ label, input {
    font-weight: 500;
 }
 
+.input-font-style {
+   font-family: Roboto, sans-serif;
+   font-size: 16px;
+   font-weight: 500;
+   color: #000000;
+}
+
 /*Boostrap edited styles*/
 .img-responsive {
     margin: 0 auto;

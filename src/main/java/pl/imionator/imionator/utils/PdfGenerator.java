@@ -78,21 +78,21 @@ public class PdfGenerator {
 
     private Rectangle setDocumentSizeAndBackgroundColor(List<Name> names) {
         Rectangle rectangle = new Rectangle(550, 800);
-        BaseColor color = names.size() == 0 ? new BaseColor(255, 255, 255) :
-                names.get(0).getSex() == Sex.BOY ? new BaseColor(224, 255, 255)
-                        : new BaseColor(255, 228, 225);
+        BaseColor color = names.size() == 0 ? new BaseColor(0, 204, 204) :
+                names.get(0).getSex() == Sex.BOY ? new BaseColor(0, 151, 255)
+                        : new BaseColor(170, 0, 204);
         rectangle.setBackgroundColor(color);
         return rectangle;
     }
 
     private Font generateHeaderFont() throws DocumentException, IOException {
         return new Font(BaseFont.createFont("Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),
-                11, Font.BOLD, BaseColor.GRAY);
+                12, Font.BOLD, BaseColor.WHITE);
     }
 
     private Font generateBodyFont() throws DocumentException, IOException {
         return new Font(BaseFont.createFont("Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),
-                11, Font.NORMAL, BaseColor.GRAY);
+                12, Font.NORMAL, BaseColor.WHITE);
     }
 
     private Paragraph generateDrawingFromUserInputStatisticsTitle(Font headerFont) {

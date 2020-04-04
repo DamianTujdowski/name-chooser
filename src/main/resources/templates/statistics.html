@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <p class="instructions-font-style">Statystyka wylosowanych imion</p>
-    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small" alt="Noworodek"/>
+    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small margin" alt="Noworodek"/>
     <p th:if="${statsFromUserInputDraw.size() == 0 and statsFromPropositionListDraw.size() == 0}"
        class="instructions-font-style margin-small">Nie wylosowano jeszcze żadnego imienia</p>
 </div>

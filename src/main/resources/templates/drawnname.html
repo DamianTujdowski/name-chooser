@@ -13,12 +13,12 @@
 <body>
 <div class="container">
     <p class="instructions-font-style margin-small">Wynik losowania</p>
-    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small" alt="Noworodek"/>
+    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small margin" alt="Noworodek"/>
     <div th:if="${name != null}">
         <form class="form-horizontal margin-small" th:object="${name}" th:action="@{/result}">
             <div class="form-group">
                 <label class="instructions-font-style">Wylosowałeś imię:</label>
-                <input type="text" class="form-control" th:field="*{firstName}"/>
+                <input type="text" class="input-font-style" th:field="*{firstName}"/>
             </div>
         </form>
     </div>
