@@ -14,6 +14,11 @@
 <div class="container">
     <p class="instructions-font-style margin-small">Wynik losowania</p>
     <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small margin" alt="Noworodek"/>
+
+    <div th:if="${name == null}">
+        <p class="instructions-font-style margin-small">Nie podałeś żadnego imienia. Wróć na stronę główną.</p>
+    </div>
+
     <div th:if="${name != null}">
         <form class="form-horizontal margin-small" th:object="${name}" th:action="@{/result}">
             <div class="form-group">
@@ -21,16 +26,15 @@
                 <input type="text" class="input-font-style" th:field="*{firstName}"/>
             </div>
         </form>
-    </div>
-    <div th:if="${name == null}">
-        <p class="instructions-font-style">Nie podałeś żadnego imienia. Wróć na stronę główną.</p>
-    </div>
-    <div class="btn-group btn-group-vertical">
-        <a href="/result" class="btn btn-primary" role="button">
-            Wylosuj ponownie <span class="glyphicon glyphicon-download-alt"></span></a>
-        <a href="/names" class="btn btn-primary" role="button">Powrót na stronę główną</a>
-        <a href="/stats" class="btn btn-primary" role="button">
-            Zobacz statystykę wylosowanych imion <span class="glyphicon glyphicon-signal"></span></a>
+
+        <div class="btn-group btn-group-vertical">
+            <a href="/result" class="btn btn-primary" role="button">
+                Wylosuj ponownie <span class="glyphicon glyphicon-download-alt"></span></a>
+            <a href="/names" class="btn btn-primary" role="button">
+                Powrót na stronę główną <span class="glyphicon glyphicon-arrow-left"></span></a>
+            <a href="/stats" class="btn btn-primary" role="button">
+                Zobacz statystykę wylosowanych imion <span class="glyphicon glyphicon-signal"></span></a>
+        </div>
     </div>
 </div>
 </body>

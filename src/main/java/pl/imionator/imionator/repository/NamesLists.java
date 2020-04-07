@@ -11,8 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-public
-class NamesLists {
+public class NamesLists {
 
     private List<String> ordinaryGirlNames;
 

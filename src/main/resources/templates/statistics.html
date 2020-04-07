@@ -14,48 +14,85 @@
 <div class="container">
     <p class="instructions-font-style">Statystyka wylosowanych imion</p>
     <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small margin" alt="Noworodek"/>
-    <p th:if="${statsFromUserInputDraw.size() == 0 and statsFromPropositionListDraw.size() == 0}"
-       class="instructions-font-style margin-small">Nie wylosowano jeszcze żadnego imienia</p>
+    <p th:if="${statsFromUserInputDraw.size() == 0 and boyStatsFromPropositionListDraw.size() == 0 and
+    girlStatsFromPropositionListDraw.size() == 0}"
+       class="instructions-font-style margin-small">Nie wylosowano żadnego imienia</p>
 </div>
 <div class="container">
-    <p th:if="${statsFromUserInputDraw.size() > 0}"
-       class="instructions-font-style margin-small">Wynik losowania spośród imion podanych przez Ciebie:</p>
-    <table th:if="${statsFromUserInputDraw.size() > 0}">
-        <thead>
-        <tr>
-            <th>Wylosowane imię</th>
-            <th>Ilość wylosowań</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="stats : ${statsFromUserInputDraw}">
-            <td th:text="${stats.key}">Imię</td>
-            <td th:text="${stats.value}">Ilość</td>
-        </tr>
-        </tbody>
-    </table>
-    <p th:if="${statsFromPropositionListDraw.size() > 0}"
-       class="instructions-font-style">Imiona wylosowane z kategorii wybranych przez Ciebie:</p>
-    <table th:if="${statsFromPropositionListDraw.size() > 0}">
-        <thead>
-        <tr>
-            <th>Wylosowane imię</th>
-            <th>Kategoria imienia</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="name : ${statsFromPropositionListDraw}">
-            <td th:text="${name.firstName}"></td>
-            <td th:text="${name.nameCategory.displayValue}"></td>
-            <td><a class="btn btn-primary" role="button" th:href="${'/deleteName/'+name.firstName}">
-                Usuń imię</a></td>
-        </tr>
-        </tbody>
-    </table>
+    <div th:if="${statsFromUserInputDraw.size() > 0}">
+        <p class="instructions-font-style margin-small">Wynik losowania spośród imion podanych przez Ciebie:</p>
+        <table>
+            <thead>
+            <tr>
+                <th>Wylosowane imię</th>
+                <th>Ilość wylosowań</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="stats : ${statsFromUserInputDraw}">
+                <td th:text="${stats.key}">Imię</td>
+                <td th:text="${stats.value}">Ilość</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="/clearUserStats" class="btn btn-primary margin" role="button">
+            Wyczyść wynik losowania <span class="glyphicon glyphicon-trash"></span></a>
+
+    </div>
+
+    <div th:if="${boyStatsFromPropositionListDraw.size() > 0}">
+        <p class="instructions-font-style">Chłopięce imiona wylosowane z kategorii wybranych przez Ciebie:</p>
+        <table>
+            <thead>
+            <tr>
+                <th>Wylosowane imię</th>
+                <th>Kategoria imienia</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="name : ${boyStatsFromPropositionListDraw}">
+                <td th:text="${name.firstName}"></td>
+                <td th:text="${name.nameCategory.displayValue}"></td>
+                <td><a class="btn btn-primary" role="button" th:href="${'/deleteName/'+name.firstName}">
+                    Usuń imię</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="/clearBoyNames" class="btn btn-primary margin" role="button">
+            Wyczyść wynik losowania <span class="glyphicon glyphicon-trash"></span></a>
+
+    </div>
+
+    <div th:if="${girlStatsFromPropositionListDraw.size() > 0}">
+        <p class="instructions-font-style">Dziewczęce imiona wylosowane z kategorii wybranych przez Ciebie:</p>
+        <table>
+            <thead>
+            <tr>
+                <th>Wylosowane imię</th>
+                <th>Kategoria imienia</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="name : ${girlStatsFromPropositionListDraw}">
+                <td th:text="${name.firstName}"></td>
+                <td th:text="${name.nameCategory.displayValue}"></td>
+                <td><a class="btn btn-primary" role="button" th:href="${'/deleteName/'+name.firstName}">
+                    Usuń imię</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="/clearGirlNames" class="btn btn-primary margin" role="button">
+            Wyczyść wynik losowania <span class="glyphicon glyphicon-trash"></span></a>
+
+    </div>
     <div class="btn-group btn-group-vertical">
-        <a href="/names" class="btn btn-primary" role="button">Powrót na stronę główną</a>
-        <a th:if="${(statsFromUserInputDraw.size() > 0) or (statsFromPropositionListDraw.size() > 0)}"
-           href="/stats/getResults" class="btn btn-primary" role="button">Wygeneruj PDF-a z wylosowanymi imionami</a>
+        <a href="/names" class="btn btn-primary" role="button">
+            Powrót na stronę główną <span class="glyphicon glyphicon-arrow-left"></span></a>
+        <a th:if="${girlStatsFromPropositionListDraw.size() > 0 or boyStatsFromPropositionListDraw.size() > 0 or statsFromUserInputDraw.size() > 0}"
+           href="/stats/drawResult" class="btn btn-primary" role="button">Wygeneruj PDF-a z wylosowanymi imionami</a>
     </div>
 </div>
 </body>

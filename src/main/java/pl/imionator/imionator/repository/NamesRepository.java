@@ -1,16 +1,16 @@
 package pl.imionator.imionator.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.annotation.SessionScope;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
 import pl.imionator.imionator.domain.Sex;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Repository
+@SessionScope
 public class NamesRepository {
 
     private NamesLists namesLists;
@@ -50,6 +50,22 @@ public class NamesRepository {
     public void deleteNameDrawnFromPropositionList(String name) {
         namesDrawnFromPropositionList = namesDrawnFromPropositionList.stream()
                 .filter(n -> !n.getFirstName().equals(name))
+                .collect(Collectors.toList());
+    }
+
+    public void clearNamesDrawnFromUserInput() {
+        namesDrawnFromUserInput.clear();
+    }
+
+    public void clearBoyNamesDrawnFromPropositionList() {
+        namesDrawnFromPropositionList = namesDrawnFromPropositionList.stream()
+                .filter(name -> name.getSex() != Sex.BOY)
+                .collect(Collectors.toList());
+    }
+
+    public void clearGirlNamesDrawnFromPropositionList() {
+        namesDrawnFromPropositionList = namesDrawnFromPropositionList.stream()
+                .filter(name -> name.getSex() != Sex.GIRL)
                 .collect(Collectors.toList());
     }
 

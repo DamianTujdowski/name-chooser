@@ -9,6 +9,7 @@ import pl.imionator.imionator.repository.NamesRepository;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,9 +40,9 @@ public class NamesService {
         return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : null;
     }
 
-    public List<Name> generateStatisticsFromPropositionListDraw() {
+    public List<Name> generateStatisticsFromPropositionListDraw(Predicate<Name> predicate) {
         return namesRepository.getNamesDrawnFromPropositionList().stream()
-                .filter(name -> name.getFirstName() != null)
+                .filter(predicate)
                 .collect(Collectors.toList());
     }
 

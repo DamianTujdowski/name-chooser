@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.imionator.imionator.domain.Name;
+import pl.imionator.imionator.domain.Sex;
 import pl.imionator.imionator.repository.NamesRepository;
 import pl.imionator.imionator.services.NamesService;
 import pl.imionator.imionator.utils.PdfGenerator;
 
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
+import java.util.Objects;
 
 @Controller
 public class NameController {
@@ -82,8 +84,29 @@ public class NameController {
     @GetMapping("/stats")
     public String drawStats(Model model) {
         model.addAttribute("statsFromUserInputDraw", namesService.generateStatisticsFromUserInputDraw());
-        model.addAttribute("statsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw());
+        model.addAttribute("boyStatsFromPropositionListDraw",
+                namesService.generateStatisticsFromPropositionListDraw(name -> name != null && name.getSex() == Sex.BOY));
+        model.addAttribute("girlStatsFromPropositionListDraw",
+                namesService.generateStatisticsFromPropositionListDraw(name -> name != null && name.getSex() == Sex.GIRL));
         return "statistics";
+    }
+
+    @GetMapping("/clearUserStats")
+    public String clearUserStats() {
+        namesRepository.clearNamesDrawnFromUserInput();
+        return "redirect:/stats";
+    }
+
+    @GetMapping("/clearBoyNames")
+    public String clearBoyNamesStatsDrawnFromPropositionList() {
+        namesRepository.clearBoyNamesDrawnFromPropositionList();
+        return "redirect:/stats";
+    }
+
+    @GetMapping("/clearGirlNames")
+    public String clearGirlNamesStatsDrawnFromPropositionList() {
+        namesRepository.clearGirlNamesDrawnFromPropositionList();
+        return "redirect:/stats";
     }
 
     @GetMapping("/deleteName/{firstName}")
@@ -92,10 +115,10 @@ public class NameController {
         return "redirect:/stats";
     }
 
-    @GetMapping(value = "/stats/getResults", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/stats/drawResult", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> namesPdf() {
         ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(namesService.generateStatisticsFromUserInputDraw(),
-                namesService.generateStatisticsFromPropositionListDraw());
+                namesService.generateStatisticsFromPropositionListDraw(Objects::nonNull));
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=drawnnames.pdf");
