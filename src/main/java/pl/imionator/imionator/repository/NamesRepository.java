@@ -53,19 +53,13 @@ public class NamesRepository {
                 .collect(Collectors.toList());
     }
 
-    public void clearNamesDrawnFromUserInput() {
+    public void removeNamesDrawnFromUserInput() {
         namesDrawnFromUserInput.clear();
     }
 
-    public void clearBoyNamesDrawnFromPropositionList() {
+    public void filterNamesDrawnFromPropositionListBySex(Sex sex) {
         namesDrawnFromPropositionList = namesDrawnFromPropositionList.stream()
-                .filter(name -> name.getSex() != Sex.BOY)
-                .collect(Collectors.toList());
-    }
-
-    public void clearGirlNamesDrawnFromPropositionList() {
-        namesDrawnFromPropositionList = namesDrawnFromPropositionList.stream()
-                .filter(name -> name.getSex() != Sex.GIRL)
+                .filter(name -> name.getSex() != sex)
                 .collect(Collectors.toList());
     }
 

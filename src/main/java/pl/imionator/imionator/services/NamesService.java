@@ -40,6 +40,11 @@ public class NamesService {
         return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : null;
     }
 
+    public List<Name> generateStatisticsFromPropositionListDraw(Sex sex) {
+        return namesRepository.getNamesDrawnFromPropositionList().stream()
+                .filter(name -> name != null && name.getSex() == sex)
+                .collect(Collectors.toList());
+    }
     public List<Name> generateStatisticsFromPropositionListDraw(Predicate<Name> predicate) {
         return namesRepository.getNamesDrawnFromPropositionList().stream()
                 .filter(predicate)

@@ -37,16 +37,16 @@ public class NameController {
 
     @GetMapping("/names")
     public String namesList(Model model) {
-        model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
+        model.addAttribute("userInput", namesRepository.getUserInput());
         model.addAttribute("namesDrawnFromUserInput", namesRepository.getNamesDrawnFromUserInput());
-        model.addAttribute("name", new pl.imionator.imionator.domain.Name());
+        model.addAttribute("name", new Name());
         return "index";
     }
 
     @PostMapping("/names")
     public String saveName(@Valid pl.imionator.imionator.domain.Name name, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
+            model.addAttribute("userInput", namesRepository.getUserInput());
             return "index";
         }
         namesRepository.saveUserInputName(name);
@@ -84,28 +84,26 @@ public class NameController {
     @GetMapping("/stats")
     public String drawStats(Model model) {
         model.addAttribute("statsFromUserInputDraw", namesService.generateStatisticsFromUserInputDraw());
-        model.addAttribute("boyStatsFromPropositionListDraw",
-                namesService.generateStatisticsFromPropositionListDraw(name -> name != null && name.getSex() == Sex.BOY));
-        model.addAttribute("girlStatsFromPropositionListDraw",
-                namesService.generateStatisticsFromPropositionListDraw(name -> name != null && name.getSex() == Sex.GIRL));
+        model.addAttribute("boyStatsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw(Sex.BOY));
+        model.addAttribute("girlStatsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw(Sex.GIRL));
         return "statistics";
     }
 
     @GetMapping("/clearUserStats")
     public String clearUserStats() {
-        namesRepository.clearNamesDrawnFromUserInput();
+        namesRepository.removeNamesDrawnFromUserInput();
         return "redirect:/stats";
     }
 
     @GetMapping("/clearBoyNames")
     public String clearBoyNamesStatsDrawnFromPropositionList() {
-        namesRepository.clearBoyNamesDrawnFromPropositionList();
+        namesRepository.filterNamesDrawnFromPropositionListBySex(Sex.BOY);
         return "redirect:/stats";
     }
 
     @GetMapping("/clearGirlNames")
     public String clearGirlNamesStatsDrawnFromPropositionList() {
-        namesRepository.clearGirlNamesDrawnFromPropositionList();
+        namesRepository.filterNamesDrawnFromPropositionListBySex(Sex.GIRL);
         return "redirect:/stats";
     }
 

@@ -34,20 +34,20 @@
         </div>
     </form>
 
-    <table th:if="${namesGivenByUser.size() > 0}" class="margin">
+    <table th:if="${!userInput.empty}" class="margin">
         <thead>
         <tr>
             <th>Podane imiona</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="name : ${namesGivenByUser}">
+        <tr th:each="name : ${userInput}">
             <td th:text="${name.firstName}"></td>
         </tr>
         </tbody>
     </table>
 
-    <div th:if="${namesGivenByUser.size() > 0 or namesDrawnFromUserInput.size() > 0}" class="btn-group btn-group-vertical">
+    <div th:if="${!userInput.empty}" class="btn-group btn-group-vertical">
         <a href="/deleteLastName" class="btn btn-primary" role="button">
             Usuń ostatnie dodane imię <span class="glyphicon glyphicon-trash "></span></a>
         <a href="/result" class="btn btn-primary" role="button">

@@ -91,7 +91,9 @@
     <div class="btn-group btn-group-vertical">
         <a href="/names" class="btn btn-primary" role="button">
             Powrót na stronę główną <span class="glyphicon glyphicon-arrow-left"></span></a>
-        <a th:if="${girlStatsFromPropositionListDraw.size() > 0 or boyStatsFromPropositionListDraw.size() > 0 or statsFromUserInputDraw.size() > 0}"
+        <a href="/randomResult" class="btn btn-primary" role="button">
+            Powrót na stronę wyboru imion <span class="glyphicon glyphicon-arrow-left"></span></a>
+        <a th:if="${!girlStatsFromPropositionListDraw.empty or !boyStatsFromPropositionListDraw.empty or !statsFromUserInputDraw.empty}"
            href="/stats/drawResult" class="btn btn-primary" role="button">Wygeneruj PDF-a z wylosowanymi imionami</a>
     </div>
 </div>
