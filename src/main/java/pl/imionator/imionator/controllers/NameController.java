@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.imionator.imionator.domain.Name;
+import pl.imionator.imionator.domain.Sex;
 import pl.imionator.imionator.repository.NamesRepository;
 import pl.imionator.imionator.services.NamesService;
 import pl.imionator.imionator.utils.PdfGenerator;
 
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
+import java.util.Objects;
 
 @Controller
 public class NameController {
@@ -35,15 +37,16 @@ public class NameController {
 
     @GetMapping("/names")
     public String namesList(Model model) {
-        model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
-        model.addAttribute("name", new pl.imionator.imionator.domain.Name());
+        model.addAttribute("userInput", namesRepository.getUserInput());
+        model.addAttribute("namesDrawnFromUserInput", namesRepository.getNamesDrawnFromUserInput());
+        model.addAttribute("name", new Name());
         return "index";
     }
 
     @PostMapping("/names")
     public String saveName(@Valid Name name, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("namesGivenByUser", namesRepository.getUserInput());
+            model.addAttribute("userInput", namesRepository.getUserInput());
             return "index";
         }
         namesRepository.saveUserInputName(name);
@@ -81,8 +84,27 @@ public class NameController {
     @GetMapping("/stats")
     public String drawStats(Model model) {
         model.addAttribute("statsFromUserInputDraw", namesService.generateStatisticsFromUserInputDraw());
-        model.addAttribute("statsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw());
+        model.addAttribute("boyStatsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw(Sex.BOY));
+        model.addAttribute("girlStatsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw(Sex.GIRL));
         return "statistics";
+    }
+
+    @GetMapping("/clearUserStats")
+    public String clearUserStats() {
+        namesRepository.removeNamesDrawnFromUserInput();
+        return "redirect:/stats";
+    }
+
+    @GetMapping("/clearBoyNames")
+    public String clearBoyNamesStatsDrawnFromPropositionList() {
+        namesRepository.filterNamesDrawnFromPropositionListBySex(Sex.BOY);
+        return "redirect:/stats";
+    }
+
+    @GetMapping("/clearGirlNames")
+    public String clearGirlNamesStatsDrawnFromPropositionList() {
+        namesRepository.filterNamesDrawnFromPropositionListBySex(Sex.GIRL);
+        return "redirect:/stats";
     }
 
     @GetMapping("/deleteName/{firstName}")
@@ -91,10 +113,10 @@ public class NameController {
         return "redirect:/stats";
     }
 
-    @GetMapping(value = "/stats/getResults", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/stats/drawResult", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> namesPdf() {
         ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(namesService.generateStatisticsFromUserInputDraw(),
-                namesService.generateStatisticsFromPropositionListDraw());
+                namesService.generateStatisticsFromPropositionListDraw(Objects::nonNull));
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=drawnnames.pdf");

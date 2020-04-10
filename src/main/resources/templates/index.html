@@ -5,59 +5,60 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-
     <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <div class="container">
-    <h2>Imionator - pomoc w wyborze imienia dla dziecka</h2>
-    <p>Poniżej możesz wpisać wszystkie imiona, spośród których chcesz wybrać to jedyne.</p>
-    <p>Po wpisaniu wszystkich imion kliknij przycisk "Wylosuj imię". Imię możesz wybierać wiele razy.</p>
-    <p>Po wielokrotnym losowaniu naciśnij przycisk "Statystyka" - zobaczysz częstotliwość losowania imienia.</p>
-</div>
-<div class="container">
-    <!--Actual time <span th:text="${actualtime.time}"/>-->
+    <h3>Imionator - pomoc w wyborze imienia dla dziecka</h3>
+    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-big" alt="Noworodek"/>
+
+    <pre>
+        Chodzą Tobie po głowie różne imiona dla twojego dziecka? Nie możesz zdecydować się na
+        to jedyne? Imionator pomoże Ci podjąć decyzję. W białe pole poniżej wpisz imię, następnie
+        kliknij przycisk "Dodaj imię do listy". Po wpisaniu wszystkich imion kliknij przycisk
+        "Wylosuj imię". Jeśli nie masz pomysłu na imię dla swojego dziecka, przejdź na dół strony.
+    </pre>
+
     <form class="form-horizontal" th:object="${name}" th:action="@{/names}" th:method="post">
         <div class="form-group">
-            <label class="control-panel">Wpisz imię:</label>
-            <input type="text" class="form-control" th:field="*{firstName}"/>
-            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" />
+            <label class="instructions-font-style">Wpisz imię:</label>
+            <input type="text" class="input-font-style" th:field="*{firstName}"/>
+            <p class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
         </div>
-        <div class="row">
-            <button type="submit" class="btn btn-default">Dodaj imię do listy</button>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Dodaj imię do listy <span
+                    class="glyphicon glyphicon-plus-sign"></span></button>
         </div>
     </form>
-</div>
-<div class="container">
-    <table class="table-striped">
+
+    <table th:if="${!userInput.empty}" class="margin">
         <thead>
         <tr>
-            <td class="control-panel">Podane imiona</td>
+            <th>Podane imiona</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="name : ${namesGivenByUser}">
+        <tr th:each="name : ${userInput}">
             <td th:text="${name.firstName}"></td>
         </tr>
         </tbody>
     </table>
-    <div class="row">
-        <a th:if="${namesGivenByUser.size() == 0}" th:href="@{/names}">Usuń ostatnie dodane imię</a>
-        <a th:if="${namesGivenByUser.size() > 0}" th:href="@{/deleteLastName}">Usuń ostatnie dodane imię</a>
+
+    <div th:if="${!userInput.empty}" class="btn-group btn-group-vertical">
+        <a href="/deleteLastName" class="btn btn-primary" role="button">
+            Usuń ostatnie dodane imię <span class="glyphicon glyphicon-trash "></span></a>
+        <a href="/result" class="btn btn-primary" role="button">
+            Wylosuj imię <span class="glyphicon glyphicon-download-alt"></span></a>
+        <a href="/stats" class="btn btn-primary" role="button">
+            Zobacz statystykę wylosowanych imion <span class="glyphicon glyphicon-signal"></span></a>
     </div>
-    <div class="row">
-        <a href="/result">Wylosuj imię spośród podanych</a>
-    </div>
-    <div class="row">
-        <a href="/stats">Zobacz statystykę wylosowanych imion</a>
-    </div>
-</div>
-<div class="container">
-    <h2>Nie masz pomysłu na imię?</h2>
-    <div class="row">
-        <a href="/randomResult">Kliknij tutaj!</a>
+    <div>
+        <p class="instructions-font-style margin">Nie masz pomysłu na imię?</p>
+        <a href="/randomResult" class="btn btn-primary" role="button">
+            Kliknij tutaj <span class="glyphicon glyphicon-exclamation-sign"></span></a>
     </div>
 </div>
 </body>

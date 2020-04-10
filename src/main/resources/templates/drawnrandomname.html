@@ -5,64 +5,65 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-
     <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <div class="container">
-    <h2>Mamy dla Ciebie pomoc</h2>
-    <p>Wybierz kategorię z listy poniżej, a Imionator wylosuje dla Ciebie imię</p>
-    <div class="row">
-        <form th:object="${randomName}" th:action="@{/randomResult}" th:method="post">
+    <p class="instructions-font-style">Mamy dla Ciebie pomoc</p>
+    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small margin" alt="Noworodek"/>
 
-            <div class="form-group">
-                <label for="sex">Wybierz płeć</label>
-                <select class="form-control selectpicker" id="sex" name="sex">
-                    <option th:each="sex : ${T(pl.imionator.imionator.domain.Sex).values()}"
-                            th:value="${sex}"
-                            th:text="${sex.displayValue}"
-                            th:attr="selected=${drawnName != null} ? (${sex == drawnName.sex})"></option>
-                </select>
-            </div>
+    <pre>
+        Wybierz płeć i kategorię z listy poniżej, a następnie kliknij przycisk wylosuj.
+        Imionator wylosuje dla Ciebie imię. Losować możesz wielokrotnie.
+    </pre>
 
-            <div class="form-group">
-                <label for="nameCategory">Wybierz kategorię</label>
-                <select class="form-control selectpicker" id="nameCategory" name="nameCategory">
-                    <option th:each="nameCategory : ${T(pl.imionator.imionator.domain.NameCategory).values()}"
-                            th:value="${nameCategory}"
-                            th:text="${nameCategory.displayValue}"
-                            th:attr="selected=${drawnName != null} ? (${nameCategory == drawnName.nameCategory})"></option>
-                </select>
-            </div>
+    <form th:object="${randomName}" th:action="@{/randomResult}" th:method="post">
+        <div class="form-group">
+            <label class="instructions-font-style" for="sex">Wybierz płeć</label>
+            <select class="form-control selectpicker" id="sex" name="sex">
+                <option th:each="sex : ${T(pl.imionator.imionator.domain.Sex).values()}"
+                        th:value="${sex}"
+                        th:text="${sex.displayValue}"
+                        th:attr="selected=${drawnName != null} ? (${sex == drawnName.sex})"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="instructions-font-style" for="nameCategory">Wybierz kategorię</label>
+            <select class="form-control selectpicker" id="nameCategory" name="nameCategory">
+                <option th:each="nameCategory : ${T(pl.imionator.imionator.domain.NameCategory).values()}"
+                        th:value="${nameCategory}"
+                        th:text="${nameCategory.displayValue}"
+                        th:attr="selected=${drawnName != null} ? (${nameCategory == drawnName.nameCategory})"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Wylosuj</button>
+        </div>
+    </form>
 
-            <div class="row">
-                <button type="submit" class="btn btn-default">Wylosuj</button>
-            </div>
-        </form>
-    </div>
-    <div class="row">
-        <table class="table-striped">
-            <thead>
-            <tr>
-                <th class="control-panel">Wylosowane imię</th>
-                <th class="control-panel">Kategoria imienia</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="name : ${drawnName}">
-                <td th:text="${name.firstName} ?: 'Wylosowałeś wszystkie możliwe imiona z kategori: '"></td>
-                <td th:text="${name.nameCategory != null} ? ${name.nameCategory.displayValue} : ''"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="row">
-        <a href="/stats">Zobacz statystykę wylosowanych imion</a>
-    </div>
-    <div class="row">
-        <a href="/names">Powrót na stronę główną</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Wylosowane imię</th>
+            <th>Kategoria imienia</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="name : ${drawnName}">
+            <td th:text="${name.firstName} ?: 'Wylosowałeś wszystkie możliwe imiona z kategori: '"></td>
+            <td th:text="${name.nameCategory != null} ? ${name.nameCategory.displayValue} : ''"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="btn-group btn-group-vertical">
+        <a href="/stats" class="btn btn-primary" role="button">
+            Zobacz statystykę wylosowanych imion <span class="glyphicon glyphicon-signal"></span></a>
+        <a href="/names" class="btn btn-primary" role="button">
+            Powrót na stronę główną <span class="glyphicon glyphicon-arrow-left"></span></a>
     </div>
 </div>
 </body>

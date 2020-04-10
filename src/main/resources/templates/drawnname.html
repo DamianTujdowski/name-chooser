@@ -5,31 +5,36 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-
     <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <div class="container">
+    <p class="instructions-font-style margin-small">Wynik losowania</p>
+    <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small margin" alt="Noworodek"/>
+
+    <div th:if="${name == null}">
+        <p class="instructions-font-style margin-small">Nie podałeś żadnego imienia. Wróć na stronę główną.</p>
+    </div>
+
     <div th:if="${name != null}">
-        <form class="form-horizontal" th:object="${name}" th:action="@{/result}">
+        <form class="form-horizontal margin-small" th:object="${name}" th:action="@{/result}">
             <div class="form-group">
-                <label class="control-panel">Wylosowane imię:</label>
-                <input type="text" class="form-control" th:field="*{firstName}"/>
+                <label class="instructions-font-style">Wylosowałeś imię:</label>
+                <input type="text" class="input-font-style" th:field="*{firstName}"/>
             </div>
         </form>
-    </div>
-    <div th:if="${name == null}">
-        <p>Nie podałeś zadnego imienia. Wróć na stronę główną</p>
-    </div>
-    <div class="row">
-        <a href="/result">Wylosuj kolejne imię</a>
-    </div>
-    <div class="row">
-        <a href="/names">Powrót na stronę losowania</a>
-    </div>
-    <div class="row">
-        <a href="/stats">Zobacz statystykę wylosowanych imion</a>
+
+        <div class="btn-group btn-group-vertical">
+            <a href="/result" class="btn btn-primary" role="button">
+                Wylosuj ponownie <span class="glyphicon glyphicon-download-alt"></span></a>
+            <a href="/names" class="btn btn-primary" role="button">
+                Powrót na stronę główną <span class="glyphicon glyphicon-arrow-left"></span></a>
+            <a href="/stats" class="btn btn-primary" role="button">
+                Zobacz statystykę wylosowanych imion <span class="glyphicon glyphicon-signal"></span></a>
+        </div>
     </div>
 </div>
 </body>
