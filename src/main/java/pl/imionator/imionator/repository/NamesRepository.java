@@ -42,7 +42,7 @@ public class NamesRepository {
 
     public void saveNameDrawnFromPropositionList(Name name) {
         int size = namesDrawnFromPropositionList.size();
-        if (size < 1 || namesDrawnFromPropositionList.get(size - 1).getFirstName() != null || name.getFirstName() != null) {
+        if (size < 1 || !namesDrawnFromPropositionList.get(size - 1).getFirstName().equals("") || !name.getFirstName().equals("")) {
             namesDrawnFromPropositionList.add(name);
         }
     }

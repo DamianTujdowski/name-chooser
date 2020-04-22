@@ -15,11 +15,13 @@
     <p class="instructions-font-style margin-small">Wynik losowania</p>
     <img th:src="@{/image/baby.jpg}" class="img-circle img-responsive img-border img-small margin" alt="Noworodek"/>
 
-    <div th:if="${name == null}">
+    <!--<div th:if="${name.firstName == ''}">-->
+    <div th:if="${#strings.isEmpty(name.firstName)}">
         <p class="instructions-font-style margin-small">Nie podałeś żadnego imienia. Wróć na stronę główną.</p>
     </div>
 
-    <div th:if="${name != null}">
+    <!--<div th:if="${name.firstName != ''}">-->
+    <div th:if="${!#strings.isEmpty(name.firstName)}">
         <form class="form-horizontal margin-small" th:object="${name}" th:action="@{/result}">
             <div class="form-group">
                 <label class="instructions-font-style">Wylosowałeś imię:</label>

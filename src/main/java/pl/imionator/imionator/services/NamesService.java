@@ -24,29 +24,35 @@ public class NamesService {
     public Name drawNameFromUserInput() {
         List<Name> names = namesRepository.getUserInput();
         Collections.shuffle(names);
-        return names.stream().findFirst().orElse(null);
+        return names
+                .stream()
+                .findFirst()
+                .orElse(new Name(""));
     }
 
     public Name getLastNameDrawnFromPropositionList() {
         return namesRepository.getNamesDrawnFromPropositionList()
                 .stream()
                 .reduce((first, second) -> second)
-                .orElse(null);
+                .orElse(new Name(""));
     }
 
     public String getRandomNameFromGivenCategory(NameCategory nameCategory, Sex sex) {
         List<String> namesFromGivenCategory = namesRepository.getNamesFromGivenCategory(sex, nameCategory);
         Collections.shuffle(namesFromGivenCategory);
-        return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : null;
+        return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : "";
     }
 
     public List<Name> generateStatisticsFromPropositionListDraw(Sex sex) {
-        return namesRepository.getNamesDrawnFromPropositionList().stream()
-                .filter(name -> name != null && name.getSex() == sex)
+        return namesRepository.getNamesDrawnFromPropositionList()
+                .stream()
+                .filter(name -> !name.getFirstName().equals("") && name.getSex() == sex)
                 .collect(Collectors.toList());
     }
+
     public List<Name> generateStatisticsFromPropositionListDraw(Predicate<Name> predicate) {
-        return namesRepository.getNamesDrawnFromPropositionList().stream()
+        return namesRepository.getNamesDrawnFromPropositionList()
+                .stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
     }

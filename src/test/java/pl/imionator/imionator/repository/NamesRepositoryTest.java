@@ -26,13 +26,12 @@ class NamesRepositoryTest {
         namesRepository.saveNameDrawnFromPropositionList(new Name("Jadwiga", Sex.GIRL, NameCategory.ORDINARY));
         namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
         namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
         //when
-        List<Name> names = namesRepository.getNamesDrawnFromPropositionList()
-                .stream()
-                .filter(name -> name.getFirstName() == null)
-                .collect(Collectors.toList());
+        List<Name> names = namesRepository.getNamesDrawnFromPropositionList();
         //then
-        assertEquals(2, names.size());
+        assertEquals(6, names.size());
     }
 
     @Test
