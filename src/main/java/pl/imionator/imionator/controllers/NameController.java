@@ -18,7 +18,6 @@ import pl.imionator.imionator.utils.PdfGenerator;
 
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
-import java.util.Objects;
 
 @Controller
 public class NameController {
@@ -69,6 +68,7 @@ public class NameController {
 
     @GetMapping("/randomResult")
     public String randomDrawResult(Model model) {
+        model.addAttribute("namesDrawnFromPropositions", namesRepository.getNamesDrawnFromPropositionList());
         model.addAttribute("drawnName", namesService.getLastNameDrawnFromPropositionList());
         model.addAttribute("randomName", new Name());
         return "drawnrandomname";
@@ -84,9 +84,24 @@ public class NameController {
     @GetMapping("/stats")
     public String drawStats(Model model) {
         model.addAttribute("statsFromUserInputDraw", namesService.generateStatisticsFromUserInputDraw());
-        model.addAttribute("boyStatsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw(Sex.BOY));
-        model.addAttribute("girlStatsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDraw(Sex.GIRL));
+        model.addAttribute("boyStatsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDrawBySex(Sex.BOY));
+        model.addAttribute("girlStatsFromPropositionListDraw", namesService.generateStatisticsFromPropositionListDrawBySex(Sex.GIRL));
         return "statistics";
+    }
+
+    @GetMapping(value = "/stats/drawResult", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> namesPdf() {
+        ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(
+                namesService.generateStatisticsFromUserInputDraw(),
+                namesRepository.getNamesDrawnFromPropositionList());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=drawnnames.pdf");
+        return ResponseEntity
+                .ok()
+                .header(String.valueOf(headers))
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(byteArrayInputStream));
     }
 
     @GetMapping("/clearUserStats")
@@ -111,19 +126,6 @@ public class NameController {
     public String deleteNameDrawnFromPropositionList(@PathVariable(name = "firstName") String name) {
         namesRepository.deleteNameDrawnFromPropositionList(name);
         return "redirect:/stats";
-    }
-
-    @GetMapping(value = "/stats/drawResult", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> namesPdf() {
-        ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(namesService.generateStatisticsFromUserInputDraw(),
-                namesService.generateStatisticsFromPropositionListDraw(Objects::nonNull));
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=drawnnames.pdf");
-        return ResponseEntity.ok()
-                .header(String.valueOf(headers))
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(byteArrayInputStream));
     }
 
 }

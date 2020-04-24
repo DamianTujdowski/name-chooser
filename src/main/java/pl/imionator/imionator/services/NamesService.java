@@ -43,17 +43,10 @@ public class NamesService {
         return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : "";
     }
 
-    public List<Name> generateStatisticsFromPropositionListDraw(Sex sex) {
+    public List<Name> generateStatisticsFromPropositionListDrawBySex(Sex sex) {
         return namesRepository.getNamesDrawnFromPropositionList()
                 .stream()
                 .filter(name -> !name.getFirstName().equals("") && name.getSex() == sex)
-                .collect(Collectors.toList());
-    }
-
-    public List<Name> generateStatisticsFromPropositionListDraw(Predicate<Name> predicate) {
-        return namesRepository.getNamesDrawnFromPropositionList()
-                .stream()
-                .filter(predicate)
                 .collect(Collectors.toList());
     }
 

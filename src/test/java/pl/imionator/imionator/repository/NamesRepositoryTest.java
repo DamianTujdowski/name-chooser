@@ -16,18 +16,16 @@ class NamesRepositoryTest {
     NamesRepository namesRepository = new NamesRepository(namesLists);
 
     @Test
-    public void shouldSaveOnlyTwoNameObjectsWithFirstNameSetToNull() {
+    public void saveNamesDrawnFromPropositionList_namesWithEmptyFirstNameAreAdde_shouldSaveOnlyTwoNamesWithEmptyFirstName() {
         //given
         namesRepository.saveNameDrawnFromPropositionList(new Name("Janina", Sex.GIRL, NameCategory.ORDINARY));
         namesRepository.saveNameDrawnFromPropositionList(new Name("Oliwia", Sex.GIRL, NameCategory.ORDINARY));
-        namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
-        namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
         namesRepository.saveNameDrawnFromPropositionList(new Name("Justyna", Sex.GIRL, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name("", Sex.GIRL, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name("", Sex.GIRL, NameCategory.ORDINARY));
         namesRepository.saveNameDrawnFromPropositionList(new Name("Jadwiga", Sex.GIRL, NameCategory.ORDINARY));
-        namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
-        namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
-        namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
-        namesRepository.saveNameDrawnFromPropositionList(new Name(null, Sex.GIRL, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name("", Sex.GIRL, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name("", Sex.GIRL, NameCategory.ORDINARY));
         //when
         List<Name> names = namesRepository.getNamesDrawnFromPropositionList();
         //then
@@ -35,7 +33,7 @@ class NamesRepositoryTest {
     }
 
     @Test
-    void shouldReturnGirlsOrdinaryNamesList() {
+    void getNamesFromGivenCategory_SexGirlOrdinaryCategory_sizeShouldEqual55() {
         //given
         List<String> names = namesRepository.getNamesFromGivenCategory(Sex.GIRL, NameCategory.ORDINARY);
         //when
@@ -45,14 +43,37 @@ class NamesRepositoryTest {
     }
 
     @Test
-    void shouldReturnGirlsModernNamesList() {
+    void getNamesFromGivenCategory_SexGirlOrdinaryModern_sizeShouldEqua41() {
         //given
         List<String> names = namesRepository.getNamesFromGivenCategory(Sex.GIRL, NameCategory.MODERN);
         //when
         int size = names.size();
         //then
-        names.forEach(System.out::println);
         assertEquals(41, size);
     }
 
+    @Test
+    void getNamesDrawnFromPropositionList_noNamesDrawnYet_drawnNamesListSizeShouldBeZero() {
+        //given
+
+        //when
+        List<Name> names = namesRepository.getNamesDrawnFromPropositionList();
+        //then
+        assertEquals(0, names.size());
+    }
+
+
+    @Test
+    void getNamesDrawnFromPropositionList_namesAreAdded_shouldReturnLastAddedNameKarolina() {
+        //given
+        namesRepository.saveNameDrawnFromPropositionList(new Name("Damian", Sex.BOY, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name("Zosia", Sex.GIRL, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name("Rafał", Sex.BOY, NameCategory.ORDINARY));
+        namesRepository.saveNameDrawnFromPropositionList(new Name("Karolina", Sex.GIRL, NameCategory.ORDINARY));
+        //when
+        List<Name> names = namesRepository.getNamesDrawnFromPropositionList();
+        Name lastDrawnName = names.get(names.size() - 1);
+        //then
+        assertEquals(lastDrawnName.getFirstName(), "Karolina");
+    }
 }

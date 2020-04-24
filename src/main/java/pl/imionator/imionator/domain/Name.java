@@ -2,6 +2,7 @@ package pl.imionator.imionator.domain;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 public class Name {
 
@@ -20,9 +21,8 @@ public class Name {
         this.firstName = firstName;
     }
 
-    public Name(String firstName, NameCategory nameCategory) {
-        this.firstName = firstName;
-        this.nameCategory = nameCategory;
+    public Name(Sex sex) {
+        this.sex = sex;
     }
 
     public Name(String firstName, Sex sex, NameCategory nameCategory) {
@@ -53,5 +53,20 @@ public class Name {
 
     public void setSex(Sex sex) {
         this.sex = sex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Name name = (Name) o;
+        return Objects.equals(firstName, name.firstName) &&
+                sex == name.sex &&
+                nameCategory == name.nameCategory;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, sex, nameCategory);
     }
 }
