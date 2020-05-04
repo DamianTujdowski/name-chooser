@@ -5,15 +5,13 @@ import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
 import pl.imionator.imionator.domain.Sex;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class NamesRepositoryTest {
     NamesLists namesLists = new NamesLists();
-    NamesRepository namesRepository = new NamesRepository(namesLists);
+    NamesRepository namesRepository = new NamesRepository();
 
     @Test
     public void saveNamesDrawnFromPropositionList_namesWithEmptyFirstNameAreAdde_shouldSaveOnlyTwoNamesWithEmptyFirstName() {
@@ -75,5 +73,15 @@ class NamesRepositoryTest {
         Name lastDrawnName = names.get(names.size() - 1);
         //then
         assertEquals(lastDrawnName.getFirstName(), "Karolina");
+    }
+
+    @Test
+    void removeDrawnName_OneNameIsDrawnFromList_shouldRemoveDrawnNameFromPropositionList() {
+        //given
+
+        //when
+        namesRepository.removeDrawnName(NameCategory.MODERN, Sex.BOY, "Eliot");
+        //then
+        assertFalse(namesRepository.getModernBoyNames().contains("Eliot"));
     }
 }

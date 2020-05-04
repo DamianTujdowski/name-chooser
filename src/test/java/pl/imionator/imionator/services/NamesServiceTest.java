@@ -7,17 +7,15 @@ import pl.imionator.imionator.domain.Sex;
 import pl.imionator.imionator.repository.NamesRepository;
 import pl.imionator.imionator.repository.NamesLists;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class NamesServiceTest {
     private NamesLists namesLists = new NamesLists();
-    private NamesRepository namesRepository = new NamesRepository(namesLists);
+    private NamesRepository namesRepository = new NamesRepository();
     private NamesService namesService = new NamesService(namesRepository);
 
     @Test

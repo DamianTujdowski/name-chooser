@@ -1,119 +1,12 @@
 package pl.imionator.imionator.repository;
 
-import org.springframework.stereotype.Component;
-import pl.imionator.imionator.domain.NameCategory;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-@Component
 public class NamesLists {
 
-    private List<String> ordinaryGirlNames;
-
-    private List<String> unusualGirlNames;
-
-    private List<String> modernGirlNames;
-
-    private List<String> oldFashionedGirlNames;
-
-    private List<String> ordinaryBoyNames;
-
-    private List<String> unusualBoyNames;
-
-    private List<String> modernBoyNames;
-
-    private List<String> oldFashionedBoyNames;
-
-
-    List<String> getOrdinaryGirlNames() {
-        return initialize(ordinaryGirlNames, "ordinaryGirlNames");
-    }
-
-    List<String> getUnusualGirlNames() {
-        return initialize(unusualGirlNames, "unusualGirlNames");
-    }
-
-    public List<String> getModernGirlNames() {
-        return initialize(modernGirlNames, "modernGirlNames");
-    }
-
-    public List<String> getOldFashionedGirlNames() {
-        return initialize(oldFashionedGirlNames, "oldFashionedGirlNames");
-    }
-
-    List<String> getOrdinaryBoyNames() {
-        return initialize(ordinaryBoyNames, "ordinaryBoyNames");
-    }
-
-    List<String> getUnusualBoyNames() {
-        return initialize(unusualBoyNames, "unusualBoyNames");
-    }
-
-    public List<String> getModernBoyNames() {
-        return initialize(modernBoyNames, "modernBoyNames");
-    }
-
-    public List<String> getOldFashionedBoyNames() {
-        return initialize(oldFashionedBoyNames, "oldFashionedBoyNames");
-    }
-
-    private List<String> initialize(List<String> list, String listName) {
-        if (list == null) {
-            switch (listName) {
-                case "ordinaryGirlNames":
-                    ordinaryGirlNames = new ArrayList<>();
-                    fillOrdinaryGirlNamesList();
-                    list = ordinaryGirlNames;
-                    break;
-                case "unusualGirlNames":
-                    unusualGirlNames = new ArrayList<>();
-                    fillUnusualGirlNamesList();
-                    list = unusualGirlNames;
-                    break;
-                case "modernGirlNames":
-                    modernGirlNames = new ArrayList<>();
-                    fillModernGirlNamesList();
-                    list = modernGirlNames;
-                    break;
-                case "oldFashionedGirlNames":
-                    oldFashionedGirlNames = new ArrayList<>();
-                    fillOldFashionedGirlNamesList();
-                    list = oldFashionedGirlNames;
-                    break;
-                case "ordinaryBoyNames":
-                    ordinaryBoyNames = new ArrayList<>();
-                    fillOrdinaryBoyNamesList();
-                    list = ordinaryBoyNames;
-                    break;
-                case "unusualBoyNames":
-                    unusualBoyNames = new ArrayList<>();
-                    fillUnusualBoyNamesList();
-                    list = unusualBoyNames;
-                    break;
-                case "modernBoyNames":
-                    modernBoyNames = new ArrayList<>();
-                    fillModernBoyNamesList();
-                    list = modernBoyNames;
-                    break;
-                case "oldFashionedBoyNames":
-                    oldFashionedBoyNames = new ArrayList<>();
-                    fillOldFashionedBoyNamesList();
-                    list = oldFashionedBoyNames;
-                    break;
-            }
-            return list;
-        } else {
-            return list;
-        }
-    }
-
-    private void fillOrdinaryGirlNamesList() {
-        Collections.addAll(ordinaryGirlNames, "Ada", "Adela", "Adrianna", "Agata", "Agnieszka", "Aldona",
+    void fillOrdinaryGirlNamesList(List<String> list) {
+        Collections.addAll(list, "Ada", "Adela", "Adrianna", "Agata", "Agnieszka", "Aldona",
                 "Alicja", "Alina", "Anastazja", "Andżelika", "Aneta", "Aniela", "Anita", "Anna", "Arleta", "Aurelia",
                 "Barbara", "Beata", "Bernadeta", "Bianka", "Blanka", "Bogna", "Bogumiła", "Bożena", "Brygida", "Cecylia",
                 "Celina", "Dagmara", "Dalia", "Daniela", "Danuta", "Daria", "Dominika", "Dorota", "Edyta", "Eliza", "Elena",
@@ -131,8 +24,8 @@ public class NamesLists {
                 "Wioletta", "Zofia", "Zuzanna", "Zyta", "Żaneta");
     }
 
-    private void fillUnusualGirlNamesList() {
-        Collections.addAll(unusualGirlNames, "Adamina", "Adria", "Aida", "Albina", "Amalia", "Amira", "Arabella",
+    void fillUnusualGirlNamesList(List<String> list) {
+        Collections.addAll(list, "Adamina", "Adria", "Aida", "Albina", "Amalia", "Amira", "Arabella",
                 "Ariadna", "Astyrda", "Atena", "Babeta", "Beatrycze", "Benigna", "Berenika", "Berta", "Bibiana", "Bojana",
                 "Cezaria", "Celestia", "Cina", "Dajmira", "Dagna", "Damroka", "Deresa", "Delinda", "Dilara", "Donata",
                 "Edeltruda", "Elmira", "Elora", "Emina", "Eunika", "Ewarysta", "Faria", "Fabiola", "Fera", "Herma",
@@ -144,15 +37,15 @@ public class NamesLists {
                 "Sybilla", "Sydonia", "Tacjana", "Tybita", "Tessa", "Wilhelmina", "Wiwianna", "Żanna", "Żywia");
     }
 
-    private void fillModernGirlNamesList() {
-        Collections.addAll(modernGirlNames, "Adelajda", "Alberta", "Aleksa", "Amanda", "Amelia", "Andrea", "Angela",
+    void fillModernGirlNamesList(List<String> list) {
+        Collections.addAll(list, "Adelajda", "Alberta", "Aleksa", "Amanda", "Amelia", "Andrea", "Angela",
                 "Brenda", "Delfina", "Delia", "Diana", "Emanuela", "Emma", "Fiona", "Fabia", "Gaja", "Iliana", "Irma", "Jessica",
                 "Kasandra", "Kiara", "Keira", "Laila", "Lea", "Lisa", "Luna", "Manuela", "Marika", "Minerwa", "Miranda",
                 "Norma", "Pamela", "Rafaela", "Rut", "Sabrina", "Samanta", "Samara", "Selena", "Stella", "Tina", "Wanessa");
     }
 
-    private void fillOldFashionedGirlNamesList() {
-        Collections.addAll(oldFashionedGirlNames, "Albertyna", "Alfreda", "Alojza", "Antonina", "Anzelma", "Apolonia",
+    void fillOldFashionedGirlNamesList(List<String> list) {
+        Collections.addAll(list, "Albertyna", "Alfreda", "Alojza", "Antonina", "Anzelma", "Apolonia",
                 "Augusta", "Balbina", "Beatrycja", "Benedykta", "Błażena", "Boguchwała", "Bolesława", "Bona", "Bronisława",
                 "Bromira", "Brunhilda", "Celestyna", "Czesława", "Ciesława", "Cinosława", "Dana", "Dargomira", "Dargosława",
                 "Dąbrówka", "Dobiesława", "Dobrochna", "Domasława", "Eleonora", "Ernesta", "Ernestyna", "Eryka", "Faustyna",
@@ -167,8 +60,8 @@ public class NamesLists {
                 "Wiesłąwa", "Wisława", "Władysława", "Włodzimiera", "Zdzisława", "Zenobia", "Żelisława", "Żywisława");
     }
 
-    private void fillOrdinaryBoyNamesList() {
-        Collections.addAll(ordinaryBoyNames, "Adam", "Adrian", "Albert", "Aleksander", "Alfred", "Andrzej",
+    void fillOrdinaryBoyNamesList(List<String> list) {
+        Collections.addAll(list, "Adam", "Adrian", "Albert", "Aleksander", "Alfred", "Andrzej",
                 "Antoni", "Ariel", "Arkadiusz", "Arnold", "Artur", "August", "Bartłomiej", "Bartosz", "Bernard", "Błażej",
                 "Bogdan", "Bogumił", "Bogusław", "Bogusz", "Borys", "Bożydar", "Cecyl", "Cezary", "Cyprian", "Cyryl",
                 "Czesław", "Damian", "Daniel", "Dariusz", "Dawid", "Dominik", "Donald", "Dorian", "Edmund", "Edward",
@@ -182,8 +75,8 @@ public class NamesLists {
                 "Szymon", "Tadeusz", "Tomasz", "Tymon", "Tymoteusz", "Tytus", "Wiktor", "Witold", "Wojciech");
     }
 
-    private void fillUnusualBoyNamesList() {
-        Collections.addAll(unusualBoyNames, "Aaron", "Abdon", "Abel", "Abelard", "Alfred", "Agrypin", "Albin",
+    void fillUnusualBoyNamesList(List<String> list) {
+        Collections.addAll(list, "Aaron", "Abdon", "Abel", "Abelard", "Alfred", "Agrypin", "Albin",
                 "Alwin", "Annasz", "Aron", "Aurelian", "Baldwin", "Beat", "Benon", "Bert", "Bolebor", "Dacjusz", "Danko",
                 "Dymitr", "Eligiusz", "Emanuel", "Emir", "Erazm", "Ewald", "Ewaryst", "Faustyn", "Felicjan", "Fortunat",
                 "Godfryd", "Gotard", "Hektor", "Hiacynt", "Hilary", "Honorat", "Izajasz", "Jacenty", "January", "Jonasz",
@@ -194,13 +87,13 @@ public class NamesLists {
                 "Sydoniusz", "Sylwan", "Telesfor", "Tyberiusz", "Urban", "Ursyn", "Walenty", "Waryn", "Zachariasz");
     }
 
-    private void fillModernBoyNamesList() {
-        Collections.addAll(modernBoyNames, "Alan", "Beniamin", "Brajan", "Bruno", "Denis", "Donat", "Edgar",
+    void fillModernBoyNamesList(List<String> list) {
+        Collections.addAll(list, "Alan", "Beniamin", "Brajan", "Bruno", "Denis", "Donat", "Edgar",
                 "Edwin", "Eliot", "Erwin", "Gilbert", "Jonatan", "Kilian", "Leo", "Natan", "Nikolas");
     }
 
-    private void fillOldFashionedBoyNamesList() {
-        Collections.addAll(oldFashionedBoyNames, "Abraham", "Agaton", "Albrecht", "Alfons", "Alojzy", "Amadeusz",
+    void fillOldFashionedBoyNamesList(List<String> list) {
+        Collections.addAll(list, "Abraham", "Agaton", "Albrecht", "Alfons", "Alojzy", "Amadeusz",
                 "Ambroży", "Anastazy", "Anatol", "Anzelm", "Apolinary", "Apoloniusz", "Arkady", "Aureliusz", "Baltazar",
                 "Barabasz", "Bazyli", "Benedykt", "Boguchwał", "Bolesław", "Bonawentura", "Bonifacy", "Bronisław", "Brunon",
                 "Budzisław", "Cecylian", "Celestyn", "Dalbor", "Damazy", "Danisław", "Darwit", "Dionizy", "Dobiesław",

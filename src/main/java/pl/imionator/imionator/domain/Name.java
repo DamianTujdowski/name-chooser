@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Name {
 
     @Size(min = 3, max = 25, message = "Imię musi posiadać od 3 do 25 liter")
-    @Pattern(regexp = "[a-zA-Z]*", message = "Podałeś znak niewystępujący w imionach - dozwolone są tylko litery alfabetu")
+    @Pattern(regexp = "[aąbcćdeęfghijklłmnńoópqrsśtuvwxyzźż]*", message = "Podałeś znak niewystępujący w imionach - dozwolone są tylko litery polskiego alfabetu")
     private String firstName;
 
     private Sex sex;
@@ -68,5 +68,5 @@ public class Name {
     @Override
     public int hashCode() {
         return Objects.hash(firstName, sex, nameCategory);
-    }
+     }
 }

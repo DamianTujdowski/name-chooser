@@ -1,7 +1,7 @@
 package pl.imionator.imionator.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
 import pl.imionator.imionator.domain.Sex;
@@ -9,7 +9,6 @@ import pl.imionator.imionator.repository.NamesRepository;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +39,12 @@ public class NamesService {
     public String getRandomNameFromGivenCategory(NameCategory nameCategory, Sex sex) {
         List<String> namesFromGivenCategory = namesRepository.getNamesFromGivenCategory(sex, nameCategory);
         Collections.shuffle(namesFromGivenCategory);
-        return namesFromGivenCategory.size() > 0 ? namesFromGivenCategory.remove(0) : "";
+        String randomName = namesFromGivenCategory
+                .stream()
+                .findFirst()
+                .orElse("");
+        namesRepository.removeDrawnName(nameCategory, sex, randomName);
+        return randomName;
     }
 
     public List<Name> generateStatisticsFromPropositionListDrawBySex(Sex sex) {

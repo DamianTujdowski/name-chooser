@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @SessionScope
 public class NamesRepository {
 
-    private NamesLists namesLists;
+    private NamesLists namesLists = new NamesLists();
 
     private List<Name> userInput = new ArrayList<>();
 
@@ -21,8 +21,31 @@ public class NamesRepository {
 
     private List<Name> namesDrawnFromPropositionList = new ArrayList<>();
 
-    public NamesRepository(NamesLists namesLists) {
-        this.namesLists = namesLists;
+    private List<String> ordinaryGirlNames = new ArrayList<>();
+
+    private List<String> unusualGirlNames = new ArrayList<>();
+
+    private List<String> modernGirlNames = new ArrayList<>();
+
+    private List<String> oldFashionedGirlNames = new ArrayList<>();
+
+    private List<String> ordinaryBoyNames = new ArrayList<>();
+
+    private List<String> unusualBoyNames = new ArrayList<>();
+
+    private List<String> modernBoyNames = new ArrayList<>();
+
+    private List<String> oldFashionedBoyNames = new ArrayList<>();
+
+    {
+        namesLists.fillOrdinaryGirlNamesList(ordinaryGirlNames);
+        namesLists.fillUnusualGirlNamesList(unusualGirlNames);
+        namesLists.fillModernGirlNamesList(modernGirlNames);
+        namesLists.fillOldFashionedGirlNamesList(oldFashionedGirlNames);
+        namesLists.fillOrdinaryBoyNamesList(ordinaryBoyNames);
+        namesLists.fillUnusualBoyNamesList(unusualBoyNames);
+        namesLists.fillModernBoyNamesList(modernBoyNames);
+        namesLists.fillOldFashionedBoyNamesList(oldFashionedBoyNames);
     }
 
     public void saveUserInputName(Name name) {
@@ -75,6 +98,19 @@ public class NamesRepository {
         return namesDrawnFromPropositionList;
     }
 
+    public void removeDrawnName(NameCategory nameCategory, Sex sex, String randomName) {
+        List<String> chosenByUserNamesList = new ArrayList<>();
+        switch (sex) {
+            case GIRL:
+                chosenByUserNamesList = setGirlNamesList(nameCategory, chosenByUserNamesList);
+                break;
+            case BOY:
+                chosenByUserNamesList = setBoyNamesList(nameCategory, chosenByUserNamesList);
+                break;
+        }
+        chosenByUserNamesList.remove(randomName);
+    }
+
     public List<String> getNamesFromGivenCategory(Sex sex, NameCategory nameCategory) {
         List<String> names = new ArrayList<>();
         switch (sex) {
@@ -91,16 +127,16 @@ public class NamesRepository {
     private List<String> setBoyNamesList(NameCategory nameCategory, List<String> names) {
         switch (nameCategory) {
             case ORDINARY:
-                names = namesLists.getOrdinaryBoyNames();
+                names = ordinaryBoyNames;
                 break;
             case UNUSUAL:
-                names = namesLists.getUnusualBoyNames();
+                names = unusualBoyNames;
                 break;
             case MODERN:
-                names = namesLists.getModernBoyNames();
+                names = modernBoyNames;
                 break;
             case OLD_FASHIONED:
-                names = namesLists.getOldFashionedBoyNames();
+                names = oldFashionedBoyNames;
                 break;
         }
         return names;
@@ -109,18 +145,22 @@ public class NamesRepository {
     private List<String> setGirlNamesList(NameCategory nameCategory, List<String> names) {
         switch (nameCategory) {
             case ORDINARY:
-                names = namesLists.getOrdinaryGirlNames();
+                names = ordinaryGirlNames;
                 break;
             case UNUSUAL:
-                names = namesLists.getUnusualGirlNames();
+                names = unusualGirlNames;
                 break;
             case MODERN:
-                names = namesLists.getModernGirlNames();
+                names = modernGirlNames;
                 break;
             case OLD_FASHIONED:
-                names = namesLists.getOldFashionedGirlNames();
+                names = oldFashionedGirlNames;
                 break;
         }
         return names;
+    }
+
+    public List<String> getModernBoyNames() {
+        return modernBoyNames;
     }
 }
