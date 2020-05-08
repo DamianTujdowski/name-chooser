@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NamesRepositoryTest {
     NamesLists namesLists = new NamesLists();
-    NamesRepository namesRepository = new NamesRepository();
+    NamesRepository namesRepository = new NamesRepository(namesLists);
 
     @Test
     public void saveNamesDrawnFromPropositionList_namesWithEmptyFirstNameAreAdde_shouldSaveOnlyTwoNamesWithEmptyFirstName() {
@@ -80,7 +80,7 @@ class NamesRepositoryTest {
         //given
 
         //when
-        namesRepository.removeDrawnName(NameCategory.MODERN, Sex.BOY, "Eliot");
+        namesRepository.removeDrawnNameFromPropositions(NameCategory.MODERN, Sex.BOY, "Eliot");
         //then
         assertFalse(namesRepository.getModernBoyNames().contains("Eliot"));
     }

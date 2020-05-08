@@ -1,7 +1,6 @@
 package pl.imionator.imionator.services;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
 import pl.imionator.imionator.domain.Sex;
@@ -43,7 +42,7 @@ public class NamesService {
                 .stream()
                 .findFirst()
                 .orElse("");
-        namesRepository.removeDrawnName(nameCategory, sex, randomName);
+        namesRepository.removeDrawnNameFromPropositions(nameCategory, sex, randomName);
         return randomName;
     }
 

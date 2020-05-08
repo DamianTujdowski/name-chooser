@@ -1,8 +1,11 @@
 package pl.imionator.imionator.repository;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.Collections;
 import java.util.List;
 
+@Repository
 public class NamesLists {
 
     void fillOrdinaryGirlNamesList(List<String> list) {

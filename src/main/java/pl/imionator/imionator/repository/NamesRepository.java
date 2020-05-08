@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @SessionScope
 public class NamesRepository {
 
-    private NamesLists namesLists = new NamesLists();
+    private NamesLists namesLists;
 
     private List<Name> userInput = new ArrayList<>();
 
@@ -36,6 +36,10 @@ public class NamesRepository {
     private List<String> modernBoyNames = new ArrayList<>();
 
     private List<String> oldFashionedBoyNames = new ArrayList<>();
+
+    public NamesRepository(NamesLists namesLists) {
+        this.namesLists = namesLists;
+    }
 
     {
         namesLists.fillOrdinaryGirlNamesList(ordinaryGirlNames);
@@ -98,17 +102,8 @@ public class NamesRepository {
         return namesDrawnFromPropositionList;
     }
 
-    public void removeDrawnName(NameCategory nameCategory, Sex sex, String randomName) {
-        List<String> chosenByUserNamesList = new ArrayList<>();
-        switch (sex) {
-            case GIRL:
-                chosenByUserNamesList = setGirlNamesList(nameCategory, chosenByUserNamesList);
-                break;
-            case BOY:
-                chosenByUserNamesList = setBoyNamesList(nameCategory, chosenByUserNamesList);
-                break;
-        }
-        chosenByUserNamesList.remove(randomName);
+    public void removeDrawnNameFromPropositions(NameCategory nameCategory, Sex sex, String randomName) {
+        getNamesFromGivenCategory(sex, nameCategory).remove(randomName);
     }
 
     public List<String> getNamesFromGivenCategory(Sex sex, NameCategory nameCategory) {
