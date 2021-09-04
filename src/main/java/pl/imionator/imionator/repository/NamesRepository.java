@@ -1,5 +1,6 @@
 package pl.imionator.imionator.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.annotation.SessionScope;
 import pl.imionator.imionator.domain.Name;
@@ -41,16 +42,16 @@ public class NamesRepository {
         this.namesLists = namesLists;
     }
 
-    {
-        namesLists.fillOrdinaryGirlNamesList(ordinaryGirlNames);
-        namesLists.fillUnusualGirlNamesList(unusualGirlNames);
-        namesLists.fillModernGirlNamesList(modernGirlNames);
-        namesLists.fillOldFashionedGirlNamesList(oldFashionedGirlNames);
-        namesLists.fillOrdinaryBoyNamesList(ordinaryBoyNames);
-        namesLists.fillUnusualBoyNamesList(unusualBoyNames);
-        namesLists.fillModernBoyNamesList(modernBoyNames);
-        namesLists.fillOldFashionedBoyNamesList(oldFashionedBoyNames);
-    }
+//    {
+//        namesLists.fillOrdinaryGirlNamesList(ordinaryGirlNames);
+//        namesLists.fillUnusualGirlNamesList(unusualGirlNames);
+//        namesLists.fillModernGirlNamesList(modernGirlNames);
+//        namesLists.fillOldFashionedGirlNamesList(oldFashionedGirlNames);
+//        namesLists.fillOrdinaryBoyNamesList(ordinaryBoyNames);
+//        namesLists.fillUnusualBoyNamesList(unusualBoyNames);
+//        namesLists.fillModernBoyNamesList(modernBoyNames);
+//        namesLists.fillOldFashionedBoyNamesList(oldFashionedBoyNames);
+//    }
 
     public void saveUserInputName(Name name) {
         userInput.add(name);
@@ -122,15 +123,19 @@ public class NamesRepository {
     private List<String> setBoyNamesList(NameCategory nameCategory, List<String> names) {
         switch (nameCategory) {
             case ORDINARY:
+                namesLists.fillOrdinaryBoyNamesList(ordinaryBoyNames);
                 names = ordinaryBoyNames;
                 break;
             case UNUSUAL:
+                namesLists.fillUnusualBoyNamesList(unusualBoyNames);
                 names = unusualBoyNames;
                 break;
             case MODERN:
+                namesLists.fillModernBoyNamesList(modernBoyNames);
                 names = modernBoyNames;
                 break;
             case OLD_FASHIONED:
+                namesLists.fillOldFashionedBoyNamesList(oldFashionedBoyNames);
                 names = oldFashionedBoyNames;
                 break;
         }
@@ -140,15 +145,19 @@ public class NamesRepository {
     private List<String> setGirlNamesList(NameCategory nameCategory, List<String> names) {
         switch (nameCategory) {
             case ORDINARY:
+                namesLists.fillOrdinaryGirlNamesList(ordinaryGirlNames);
                 names = ordinaryGirlNames;
                 break;
             case UNUSUAL:
+                namesLists.fillUnusualGirlNamesList(unusualGirlNames);
                 names = unusualGirlNames;
                 break;
             case MODERN:
+                namesLists.fillModernGirlNamesList(modernGirlNames);
                 names = modernGirlNames;
                 break;
             case OLD_FASHIONED:
+                namesLists.fillOldFashionedGirlNamesList(oldFashionedGirlNames);
                 names = oldFashionedGirlNames;
                 break;
         }

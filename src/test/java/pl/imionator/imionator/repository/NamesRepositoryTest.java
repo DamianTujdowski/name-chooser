@@ -1,6 +1,10 @@
 package pl.imionator.imionator.repository;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
 import pl.imionator.imionator.domain.Sex;
@@ -9,9 +13,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class NamesRepositoryTest {
-    NamesLists namesLists = new NamesLists();
-    NamesRepository namesRepository = new NamesRepository(namesLists);
+
+    @Autowired
+    private NamesLists namesLists;
+
+    @Autowired
+    private NamesRepository namesRepository;
 
     @Test
     public void saveNamesDrawnFromPropositionList_namesWithEmptyFirstNameAreAdde_shouldSaveOnlyTwoNamesWithEmptyFirstName() {

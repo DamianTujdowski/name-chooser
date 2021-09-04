@@ -1,6 +1,11 @@
 package pl.imionator.imionator.services;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.NameCategory;
 import pl.imionator.imionator.domain.Sex;
@@ -13,10 +18,18 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 class NamesServiceTest {
-    private NamesLists namesLists = new NamesLists();
-    private NamesRepository namesRepository = new NamesRepository();
-    private NamesService namesService = new NamesService(namesRepository);
+
+    @Autowired
+    private NamesLists namesLists;
+
+    @Autowired
+    private NamesRepository namesRepository;
+
+    @Autowired
+    private NamesService namesService;
 
     @Test
     void getLastNameDrawnFromPropositionList_noNamesDrawnYet_shouldReturnEmptyFirstName() {
