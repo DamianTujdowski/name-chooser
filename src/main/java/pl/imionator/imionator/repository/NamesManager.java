@@ -22,13 +22,15 @@ public class NamesManager {
 
     private List<Name> namesDrawnFromPropositionList = new ArrayList<>();
 
+
+    //TODO remove this getter
     public List<String> getOrdinaryGirlNames() {
         return ordinaryGirlNames;
     }
 
     private List<String> ordinaryGirlNames;
 
-    private List<String> unusualGirlNames = new ArrayList<>();
+    private List<String> unusualGirlNames;
 
     private List<String> modernGirlNames = new ArrayList<>();
 
@@ -45,7 +47,7 @@ public class NamesManager {
     public NamesManager(NamesLoader namesLoader) {
         this.namesLoader = namesLoader;
         ordinaryGirlNames = namesLoader.fillOrdinaryGirlNamesList();
-        namesLoader.fillUnusualGirlNamesList(unusualGirlNames);
+        unusualGirlNames = namesLoader.fillUnusualGirlNamesList();
         namesLoader.fillModernGirlNamesList(modernGirlNames);
         namesLoader.fillOldFashionedGirlNamesList(oldFashionedGirlNames);
         namesLoader.fillOrdinaryBoyNamesList(ordinaryBoyNames);

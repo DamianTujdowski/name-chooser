@@ -23,6 +23,7 @@ class NamesManagerTest {
     @Autowired
     private NamesManager namesManager;
 
+    //TODO test all names lists
     @Test
     void shouldProperlyLoadNamesFromFile() {
         assertEquals(155, namesManager.getOrdinaryGirlNames().size());

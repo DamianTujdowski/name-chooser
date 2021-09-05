@@ -19,39 +19,11 @@ import java.util.stream.Stream;
 public class NamesLoader {
 
     List<String> fillOrdinaryGirlNamesList() {
-        List<String> list = new ArrayList<>();
-
-        try {
-            Path path = Paths.get(Objects.requireNonNull(getClass()
-                    .getClassLoader()
-                    .getResource("static/names/ordinary_girl_names.txt"))
-                    .toURI());
-
-            Stream<String> lines = Files.lines(path);
-
-             list = lines
-                    .map(this::getStreamFromLine)
-                    .flatMap(Function.identity())
-                    .collect(Collectors.toList());
-
-            lines.close();
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
-        }
-        return list;
+        return readFromFile("static/names/ordinary_girl_names.txt");
     }
 
-    void fillUnusualGirlNamesList(List<String> list) {
-        Collections.addAll(list, "Adamina", "Adria", "Aida", "Albina", "Amalia", "Amira", "Arabella",
-                "Ariadna", "Astyrda", "Atena", "Babeta", "Beatrycze", "Benigna", "Berenika", "Berta", "Bibiana", "Bojana",
-                "Cezaria", "Celestia", "Cina", "Dajmira", "Dagna", "Damroka", "Deresa", "Delinda", "Dilara", "Donata",
-                "Edeltruda", "Elmira", "Elora", "Emina", "Eunika", "Ewarysta", "Faria", "Fabiola", "Fera", "Herma",
-                "Hermina", "Hestia", "Ilga", "Ilia", "Iryda", "Irina", "Jokasta", "Juta", "Kamira", "Kiliana", "Kira",
-                "Kleopatra", "Kodrula", "Koryna", "Lana", "Lara", "Larysa", "Leoncja", "Letycja", "Lola", "Marcjanna",
-                "Marzanna", "Miroda", "Nitara", "Noemi", "Nora", "Nita", "Odyla", "Ofelia", "Odyta", "Oktawia", "Olimpia",
-                "Oriana", "Ota", "Ożanna", "Obina", "Olena", "Olianna", "Petra", "Polianna", "Rachela", "Ramona", "Rajna",
-                "Raszyda", "Regina", "Rozwita", "Ruta", "Ryksa", "Sarina", "Sarita", "Safana", "Salma", "Saloma", "Sora",
-                "Sybilla", "Sydonia", "Tacjana", "Tybita", "Tessa", "Wilhelmina", "Wiwianna", "Żanna", "Żywia");
+    List<String>  fillUnusualGirlNamesList() {
+        return readFromFile("static/names/unusual_girl_names.txt");
     }
 
     void fillModernGirlNamesList(List<String> list) {
@@ -125,6 +97,29 @@ public class NamesLoader {
                 "Wawrzyniec", "Wespazjan", "Wielisław", "Wilhelm", "Wincenty", "Wirgiliusz", "Wit", "Władysław",
                 "Włodzimierz", "Włodzisław", "Zbigniew", "Zdzisław", "Zenobiusz", "Zenon", "Zygfryd", "Zygmunt", "Żarko",
                 "Żelisław");
+    }
+
+    private List<String> readFromFile(String resourcePath) {
+        List<String> list = new ArrayList<>();
+
+        try {
+            Path path = Paths.get(Objects.requireNonNull(getClass()
+                    .getClassLoader()
+                    .getResource(resourcePath))
+                    .toURI());
+
+            Stream<String> lines = Files.lines(path);
+
+            list = lines
+                    .map(this::getStreamFromLine)
+                    .flatMap(Function.identity())
+                    .collect(Collectors.toList());
+
+            lines.close();
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     private Stream<String> getStreamFromLine(String line) {
