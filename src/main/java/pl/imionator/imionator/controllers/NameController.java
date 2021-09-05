@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.imionator.imionator.domain.Name;
 import pl.imionator.imionator.domain.Sex;
-import pl.imionator.imionator.repository.NamesRepository;
+import pl.imionator.imionator.repository.NamesManager;
 import pl.imionator.imionator.services.NamesService;
 import pl.imionator.imionator.utils.PdfGenerator;
 
@@ -24,20 +24,20 @@ public class NameController {
 
     private NamesService namesService;
 
-    private NamesRepository namesRepository;
+    private NamesManager namesManager;
 
     private PdfGenerator pdfGenerator;
 
-    public NameController(NamesService namesService, NamesRepository namesRepository, PdfGenerator pdfGenerator) {
+    public NameController(NamesService namesService, NamesManager namesManager, PdfGenerator pdfGenerator) {
         this.namesService = namesService;
-        this.namesRepository = namesRepository;
+        this.namesManager = namesManager;
         this.pdfGenerator = pdfGenerator;
     }
 
     @GetMapping("/names")
     public String namesList(Model model) {
-        model.addAttribute("userInput", namesRepository.getUserInput());
-        model.addAttribute("namesDrawnFromUserInput", namesRepository.getNamesDrawnFromUserInput());
+        model.addAttribute("userInput", namesManager.getUserInput());
+        model.addAttribute("namesDrawnFromUserInput", namesManager.getNamesDrawnFromUserInput());
         model.addAttribute("name", new Name());
         return "index";
     }
@@ -45,16 +45,16 @@ public class NameController {
     @PostMapping("/names")
     public String saveName(@Valid Name name, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("userInput", namesRepository.getUserInput());
+            model.addAttribute("userInput", namesManager.getUserInput());
             return "index";
         }
-        namesRepository.saveUserInputName(name);
+        namesManager.saveUserInputName(name);
         return "redirect:/names";
     }
 
     @GetMapping("/deleteLastName")
     public String deleteLastNameFromUserInput() {
-        namesRepository.deleteLastAddedName();
+        namesManager.deleteLastAddedName();
         return "redirect:/names";
     }
 
@@ -62,13 +62,13 @@ public class NameController {
     public String drawResult(Model model) {
         Name name = namesService.drawNameFromUserInput();
         model.addAttribute("name", name);
-        namesRepository.saveNameDrawnFromUserInput(name);
+        namesManager.saveNameDrawnFromUserInput(name);
         return "drawnname";
     }
 
     @GetMapping("/randomResult")
     public String randomDrawResult(Model model) {
-        model.addAttribute("namesDrawnFromPropositions", namesRepository.getNamesDrawnFromPropositionList());
+        model.addAttribute("namesDrawnFromPropositions", namesManager.getNamesDrawnFromPropositionList());
         model.addAttribute("drawnName", namesService.getLastNameDrawnFromPropositionList());
         model.addAttribute("randomName", new Name());
         return "drawnrandomname";
@@ -77,7 +77,7 @@ public class NameController {
     @PostMapping("/randomResult")
     public String drawRandomName(Name name) {
         name.setFirstName(namesService.getRandomNameFromGivenCategory(name.getNameCategory(), name.getSex()));
-        namesRepository.saveNameDrawnFromPropositionList(name);
+        namesManager.saveNameDrawnFromPropositionList(name);
         return "redirect:/randomResult";
     }
 
@@ -93,7 +93,7 @@ public class NameController {
     public ResponseEntity<InputStreamResource> namesPdf() {
         ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(
                 namesService.generateStatisticsFromUserInputDraw(),
-                namesRepository.getNamesDrawnFromPropositionList());
+                namesManager.getNamesDrawnFromPropositionList());
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=drawnnames.pdf");
@@ -106,25 +106,25 @@ public class NameController {
 
     @GetMapping("/clearUserStats")
     public String clearUserStats() {
-        namesRepository.removeNamesDrawnFromUserInput();
+        namesManager.removeNamesDrawnFromUserInput();
         return "redirect:/stats";
     }
 
     @GetMapping("/clearBoyNames")
     public String clearBoyNamesStatsDrawnFromPropositionList() {
-        namesRepository.filterNamesDrawnFromPropositionListBySex(Sex.BOY);
+        namesManager.filterNamesDrawnFromPropositionListBySex(Sex.BOY);
         return "redirect:/stats";
     }
 
     @GetMapping("/clearGirlNames")
     public String clearGirlNamesStatsDrawnFromPropositionList() {
-        namesRepository.filterNamesDrawnFromPropositionListBySex(Sex.GIRL);
+        namesManager.filterNamesDrawnFromPropositionListBySex(Sex.GIRL);
         return "redirect:/stats";
     }
 
     @GetMapping("/deleteName/{firstName}")
     public String deleteNameDrawnFromPropositionList(@PathVariable(name = "firstName") String name) {
-        namesRepository.deleteNameDrawnFromPropositionList(name);
+        namesManager.deleteNameDrawnFromPropositionList(name);
         return "redirect:/stats";
     }
 

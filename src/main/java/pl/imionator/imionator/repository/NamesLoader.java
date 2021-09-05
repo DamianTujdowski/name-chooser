@@ -2,29 +2,43 @@ package pl.imionator.imionator.repository;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
-public class NamesLists {
+public class NamesLoader {
 
-    void fillOrdinaryGirlNamesList(List<String> list) {
-        Collections.addAll(list, "Ada", "Adela", "Adrianna", "Agata", "Agnieszka", "Aldona",
-                "Alicja", "Alina", "Anastazja", "Andżelika", "Aneta", "Aniela", "Anita", "Anna", "Arleta", "Aurelia",
-                "Barbara", "Beata", "Bernadeta", "Bianka", "Blanka", "Bogna", "Bogumiła", "Bożena", "Brygida", "Cecylia",
-                "Celina", "Dagmara", "Dalia", "Daniela", "Danuta", "Daria", "Dominika", "Dorota", "Edyta", "Eliza", "Elena",
-                "Elwira", "Elżbieta", "Emilia", "Estera", "Eugenia", "Ewa", "Ewelina", "Felicja", "Gabriela", "Gloria",
-                "Gracja", "Grażyna", "Greta", "Halina", "Halszka", "Hanna", "Helena", "Honorata", "Hortensja", "Ida",
-                "Idalia", "Iga", "Ilona", "Inga", "Inka", "Irena", "Irmina", "Iwona", "Izabela", "Jagoda", "Joanna",
-                "Jolanta", "Judyta", "Julia", "Julita", "Justyna", "Kaja", "Kama", "Kalina", "Karina", "Karolina",
-                "Katarzyna", "Kinga", "Klara", "Klaudia", "Kornelia", "Krystyna", "Laura", "Lena", "Leokadia",
-                "Lidia", "Lila", "Lilianna", "Lilia", "Liwia", "Lucyna", "Ludmiła", "Luiza", "Łucja", "Magdalena", "Maja",
-                "Malina", "Malwina", "Małgorzata", "Marcela", "Marcelina", "Maria", "Marietta", "Mariola", "Marlena",
-                "Marta", "Martyna", "Maryla", "Marzena", "Matylda", "Michalina", "Milena", "Monika", "Nadia", "Natalia",
-                "Natasza", "Nela", "Nikola", "Nina", "Nikoletta", "Odeta", "Oksana", "Olga", "Oliwia", "Otylia", "Patrycja",
-                "Paulina", "Pola", "Rebeka", "Renata", "Rita", "Roksana", "Roma", "Róża", "Sabina", "Sandra", "Sara", "Sonia",
-                "Sylwia", "Tamara", "Tatiana", "Teresa", "Ula", "Urszula", "Waleria", "Wanda", "Weronika", "Wiktoria",
-                "Wioletta", "Zofia", "Zuzanna", "Zyta", "Żaneta");
+    List<String> fillOrdinaryGirlNamesList() {
+        List<String> list = new ArrayList<>();
+
+        try {
+            Path path = Paths.get(Objects.requireNonNull(getClass()
+                    .getClassLoader()
+                    .getResource("static/names/ordinary_girl_names.txt"))
+                    .toURI());
+
+            Stream<String> lines = Files.lines(path);
+
+             list = lines
+                    .map(this::getStreamFromLine)
+                    .flatMap(Function.identity())
+                    .collect(Collectors.toList());
+
+            lines.close();
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     void fillUnusualGirlNamesList(List<String> list) {
@@ -112,4 +126,11 @@ public class NamesLists {
                 "Włodzimierz", "Włodzisław", "Zbigniew", "Zdzisław", "Zenobiusz", "Zenon", "Zygfryd", "Zygmunt", "Żarko",
                 "Żelisław");
     }
+
+    private Stream<String> getStreamFromLine(String line) {
+        return Arrays.stream(line
+                .replaceAll("\n", "")
+                .split(", "));
+    }
+
 }
