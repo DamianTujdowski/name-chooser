@@ -26,7 +26,8 @@ class NamesManagerTest {
     //TODO test all names lists
     @Test
     void shouldProperlyLoadNamesFromFile() {
-        assertEquals(155, namesManager.getOrdinaryGirlNames().size());
+        List<String> ordinaryGirlNames = namesManager.getNamesFromGivenCategory(Sex.GIRL, NameCategory.ORDINARY);
+        assertEquals(155, ordinaryGirlNames.size());
     }
 
     @Test
@@ -93,10 +94,10 @@ class NamesManagerTest {
     @Test
     void removeDrawnName_OneNameIsDrawnFromList_shouldRemoveDrawnNameFromPropositionList() {
         //given
-
+        List<String> modernBoyNames = namesManager.getNamesFromGivenCategory(Sex.BOY, NameCategory.MODERN);
         //when
         namesManager.removeDrawnNameFromPropositions(NameCategory.MODERN, Sex.BOY, "Eliot");
         //then
-        assertFalse(namesManager.getModernBoyNames().contains("Eliot"));
+        assertFalse(modernBoyNames.contains("Eliot"));
     }
 }
