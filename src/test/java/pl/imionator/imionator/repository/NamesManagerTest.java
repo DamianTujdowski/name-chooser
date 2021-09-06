@@ -23,11 +23,24 @@ class NamesManagerTest {
     @Autowired
     private NamesManager namesManager;
 
-    //TODO test all names lists
     @Test
-    void shouldProperlyLoadNamesFromFile() {
+    void shouldLoadAllNamesFromFiles() {
         List<String> ordinaryGirlNames = namesManager.getNamesFromGivenCategory(Sex.GIRL, NameCategory.ORDINARY);
         assertEquals(155, ordinaryGirlNames.size());
+        List<String> unusualGirlNames = namesManager.getNamesFromGivenCategory(Sex.GIRL, NameCategory.UNUSUAL);
+        assertEquals(100, unusualGirlNames.size());
+        List<String> modernGirlNames = namesManager.getNamesFromGivenCategory(Sex.GIRL, NameCategory.MODERN);
+        assertEquals(41, modernGirlNames.size());
+        List<String> oldFashionedGirlNames = namesManager.getNamesFromGivenCategory(Sex.GIRL, NameCategory.OLD_FASHIONED);
+        assertEquals(111, oldFashionedGirlNames.size());
+        List<String> ordinaryBoyNames = namesManager.getNamesFromGivenCategory(Sex.BOY, NameCategory.ORDINARY);
+        assertEquals(113, ordinaryBoyNames.size());
+        List<String> unusualBoyNames = namesManager.getNamesFromGivenCategory(Sex.BOY, NameCategory.UNUSUAL);
+        assertEquals(87, unusualBoyNames.size());
+        List<String> modernBoyNames = namesManager.getNamesFromGivenCategory(Sex.BOY, NameCategory.MODERN);
+        assertEquals(16, modernBoyNames.size());
+        List<String> oldFashionedBoyNames = namesManager.getNamesFromGivenCategory(Sex.BOY, NameCategory.OLD_FASHIONED);
+        assertEquals(126, oldFashionedBoyNames.size());
     }
 
     @Test
@@ -45,26 +58,6 @@ class NamesManagerTest {
         List<Name> names = namesManager.getNamesDrawnFromPropositionList();
         //then
         assertEquals(6, names.size());
-    }
-
-    @Test
-    void getNamesFromGivenCategory_SexGirlOrdinaryCategory_sizeShouldEqual55() {
-        //given
-        List<String> names = namesManager.getNamesFromGivenCategory(Sex.GIRL, NameCategory.ORDINARY);
-        //when
-        int size = names.size();
-        //then
-        assertEquals(155, size);
-    }
-
-    @Test
-    void getNamesFromGivenCategory_SexGirlOrdinaryModern_sizeShouldEqua41() {
-        //given
-        List<String> names = namesManager.getNamesFromGivenCategory(Sex.GIRL, NameCategory.MODERN);
-        //when
-        int size = names.size();
-        //then
-        assertEquals(41, size);
     }
 
     @Test

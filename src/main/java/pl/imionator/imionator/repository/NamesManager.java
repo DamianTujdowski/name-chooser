@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 @SessionScope
 public class NamesManager {
 
-    private NamesLoader namesLoader;
-
     private List<Name> userInput = new ArrayList<>();
 
     private List<Name> namesDrawnFromUserInput = new ArrayList<>();
@@ -30,25 +28,23 @@ public class NamesManager {
 
     private List<String> oldFashionedGirlNames;
 
-    private List<String> ordinaryBoyNames = new ArrayList<>();
+    private List<String> ordinaryBoyNames;
 
-    private List<String> unusualBoyNames = new ArrayList<>();
+    private List<String> unusualBoyNames;
 
-    private List<String> modernBoyNames = new ArrayList<>();
+    private List<String> modernBoyNames;
 
-    private List<String> oldFashionedBoyNames = new ArrayList<>();
+    private List<String> oldFashionedBoyNames;
 
     public NamesManager(NamesLoader namesLoader) {
-        this.namesLoader = namesLoader;
         ordinaryGirlNames = namesLoader.fillOrdinaryGirlNamesList();
         unusualGirlNames = namesLoader.fillUnusualGirlNamesList();
         modernGirlNames = namesLoader.fillModernGirlNamesList();
         oldFashionedGirlNames = namesLoader.fillOldFashionedGirlNamesList();
-        namesLoader.fillOrdinaryBoyNamesList(ordinaryBoyNames);
-        namesLoader.fillUnusualBoyNamesList(unusualBoyNames);
-        namesLoader.fillModernBoyNamesList(modernBoyNames);
-        namesLoader.fillOldFashionedBoyNamesList(oldFashionedBoyNames);
-
+        ordinaryBoyNames = namesLoader.fillOrdinaryBoyNamesList();
+        unusualBoyNames = namesLoader.fillUnusualBoyNamesList();
+        modernBoyNames = namesLoader.fillModernBoyNamesList();
+        oldFashionedBoyNames = namesLoader.fillOldFashionedBoyNamesList();
     }
 
     public void saveUserInputName(Name name) {

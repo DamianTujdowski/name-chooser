@@ -1,0 +1,13 @@
+Albertyna, Alfreda, Alojza, Antonina, Anzelma, Apolonia,
+ Augusta, Balbina, Beatrycja, Benedykta, Błażena, Boguchwała, Bolesława, Bona, Bronisława,
+ Bromira, Brunhilda, Celestyna, Czesława, Ciesława, Cinosława, Dana, Dargomira, Dargosława,
+ Dąbrówka, Dobiesława, Dobrochna, Domasława, Eleonora, Ernesta, Ernestyna, Eryka, Faustyna,
+ Felicjana, Feliksa, Filipa, Filomena, Flora, Florentyna, Franciszka, Fryderyka, Genowefa,
+ Gertruda, Gizela, Gryzelda, Hadriana, Henrieta, Henryka, Hermenegilda, Hiacynta, Hilaria,
+ Hildegarda, Hipolita, Huberta, Idosława, Ildefonsa, Ingeborga, Ingryda, Jadwiga, Jagna,
+ Janina, Jarmiłą, Jaromiła, Jaśmina, Jowita, Józefina, Julisława, Kazimiera, Klarysa,
+ Klaudyna, Klementyna, Klotylda, Konstancja, Ksenia, Kunegunda, Laurencja, Leonora, Leontyna,
+ Leopolda, Luborada, Lucjana, Melania, Mieczysława, Miłosława, Miłowita, Mojmira, Najmiła,
+ Najsława, Pelagia, Petronela, Polmira, Przemysława, Przybysława, Rozalia, Rozalinda,
+ Rozamunda, Rudolfina, Serafina, Sobiesława, Telimena, Teodora, Teofilia, Walentyna,
+ Wiesłąwa, Wisława, Władysława, Włodzimiera, Zdzisława, Zenobia, Żelisława, Żywisława
