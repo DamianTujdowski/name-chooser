@@ -1,9 +1,9 @@
-Aaron, Abdon, Abel, Abelard, Alfred, Agrypin, Albin,
- Alwin, Annasz, Aron, Aurelian, Baldwin, Beat, Benon, Bert, Bolebor, Dacjusz, Danko,
- Dymitr, Eligiusz, Emanuel, Emir, Erazm, Ewald, Ewaryst, Faustyn, Felicjan, Fortunat,
- Godfryd, Gotard, Hektor, Hiacynt, Hilary, Honorat, Izajasz, Jacenty, January, Jonasz,
- Justyn, Justynian, Kajusz, Kastor, Kemal, Kordian, Kosma, Krzesimir, Laurencjusz,
- Lenart, Lew, Longin, Ludmił, Ludolf, Makary, Maksymin, Manfred, Manuel, Marcjan,
- Medard, Metody, Milan, Modest, Narcyz, Nestor, Norman, Odon, Oktawian, Orest, Orian,
- Owidiusz, Pafnucy, Polikarp, Prokop, Protazy, Rajmund, Roland, Rufus, Sambor, Stojan,
- Sydoniusz, Sylwan, Telesfor, Tyberiusz, Urban, Ursyn, Walenty, Waryn, Zachariasz
+Aaron, Abdon, Abel, Abelard, Alfred, Agrypin, Albin, 
+Alwin, Annasz, Aron, Aurelian, Baldwin, Beat, Benon, Bert, Bolebor, Dacjusz, Danko, 
+Dymitr, Eligiusz, Emanuel, Emir, Erazm, Ewald, Ewaryst, Faustyn, Felicjan, Fortunat, 
+Godfryd, Gotard, Hektor, Hiacynt, Hilary, Honorat, Izajasz, Jacenty, January, Jonasz, 
+Justyn, Justynian, Kajusz, Kastor, Kemal, Kordian, Kosma, Krzesimir, Laurencjusz, 
+Lenart, Lew, Longin, Ludmił, Ludolf, Makary, Maksymin, Manfred, Manuel, Marcjan, 
+Medard, Metody, Milan, Modest, Narcyz, Nestor, Norman, Odon, Oktawian, Orest, Orian, 
+Owidiusz, Pafnucy, Polikarp, Prokop, Protazy, Rajmund, Roland, Rufus, Sambor, Stojan, 
+Sydoniusz, Sylwan, Telesfor, Tyberiusz, Urban, Ursyn, Walenty, Waryn, Zachariasz
