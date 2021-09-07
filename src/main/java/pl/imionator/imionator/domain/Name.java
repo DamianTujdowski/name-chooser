@@ -39,8 +39,16 @@ public class Name {
         return nameCategory;
     }
 
+    public void setNameCategory(NameCategory nameCategory) {
+        this.nameCategory = nameCategory;
+    }
+
     public Sex getSex() {
         return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 
     @Override
