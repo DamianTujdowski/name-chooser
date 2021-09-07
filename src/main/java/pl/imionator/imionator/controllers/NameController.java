@@ -26,12 +26,9 @@ public class NameController {
 
     private NamesManager namesManager;
 
-    private PdfGenerator pdfGenerator;
-
-    public NameController(NamesService namesService, NamesManager namesManager, PdfGenerator pdfGenerator) {
+    public NameController(NamesService namesService, NamesManager namesManager) {
         this.namesService = namesService;
         this.namesManager = namesManager;
-        this.pdfGenerator = pdfGenerator;
     }
 
     @GetMapping("/names")
@@ -91,17 +88,7 @@ public class NameController {
 
     @GetMapping(value = "/stats/drawResult", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> namesPdf() {
-        ByteArrayInputStream byteArrayInputStream = pdfGenerator.generatePdf(
-                namesService.generateStatisticsFromUserInputDraw(),
-                namesManager.getNamesDrawnFromPropositionList());
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=drawnnames.pdf");
-        return ResponseEntity
-                .ok()
-                .header(String.valueOf(headers))
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(byteArrayInputStream));
+        return namesService.generatePdf();
     }
 
     @GetMapping("/clearUserStats")
