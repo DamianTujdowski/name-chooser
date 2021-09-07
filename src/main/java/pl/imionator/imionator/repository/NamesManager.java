@@ -114,25 +114,6 @@ public class NamesManager {
         return names;
     }
 
-    //TODO simple factory?
-    private List<String> setBoyNamesList(NameCategory nameCategory, List<String> names) {
-        switch (nameCategory) {
-            case ORDINARY:
-                names = ordinaryBoyNames;
-                break;
-            case UNUSUAL:
-                names = unusualBoyNames;
-                break;
-            case MODERN:
-                names = modernBoyNames;
-                break;
-            case OLD_FASHIONED:
-                names = oldFashionedBoyNames;
-                break;
-        }
-        return names;
-    }
-
     private List<String> setGirlNamesList(NameCategory nameCategory, List<String> names) {
         switch (nameCategory) {
             case ORDINARY:
@@ -146,6 +127,24 @@ public class NamesManager {
                 break;
             case OLD_FASHIONED:
                 names = oldFashionedGirlNames;
+                break;
+        }
+        return names;
+    }
+
+    private List<String> setBoyNamesList(NameCategory nameCategory, List<String> names) {
+        switch (nameCategory) {
+            case ORDINARY:
+                names = ordinaryBoyNames;
+                break;
+            case UNUSUAL:
+                names = unusualBoyNames;
+                break;
+            case MODERN:
+                names = modernBoyNames;
+                break;
+            case OLD_FASHIONED:
+                names = oldFashionedBoyNames;
                 break;
         }
         return names;
