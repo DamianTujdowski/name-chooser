@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Name {
 
     @Size(min = 3, max = 25, message = "Imię musi posiadać od 3 do 25 liter")
-    @Pattern(regexp = "[aąbcćdeęfghijklłmnńoópqrsśtuvwxyzźż]*", message = "Podałeś znak niewystępujący w imionach - dozwolone są tylko litery polskiego alfabetu")
+    @Pattern(regexp = "[a-ząćęłńóśźżA-ZŁŚŹŻ]*", message = "Podałeś znak niewystępujący w imionach - dozwolone są tylko litery polskiego alfabetu")
     private String firstName;
 
     private Sex sex;
@@ -19,10 +19,6 @@ public class Name {
 
     public Name(String firstName) {
         this.firstName = firstName;
-    }
-
-    public Name(Sex sex) {
-        this.sex = sex;
     }
 
     public Name(String firstName, Sex sex, NameCategory nameCategory) {
@@ -43,16 +39,8 @@ public class Name {
         return nameCategory;
     }
 
-    public void setNameCategory(NameCategory nameCategory) {
-        this.nameCategory = nameCategory;
-    }
-
     public Sex getSex() {
         return sex;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
     }
 
     @Override
