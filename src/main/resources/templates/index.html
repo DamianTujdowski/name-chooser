@@ -22,7 +22,7 @@
         "Wylosuj imię". Jeśli nie masz pomysłu na imię dla swojego dziecka, przejdź na dół strony.
     </pre>
 
-    <form class="form-horizontal" th:object="${name}" th:action="@{/names}" th:method="post">
+    <form class="form-horizontal" th:object="${name}" th:action="@{/}" th:method="post">
         <div class="form-group">
             <label class="instructions-font-style">Wpisz imię:</label>
             <input type="text" class="input-font-style" th:field="*{firstName}"/>

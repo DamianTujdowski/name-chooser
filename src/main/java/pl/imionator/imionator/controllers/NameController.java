@@ -31,7 +31,7 @@ public class NameController {
         this.namesManager = namesManager;
     }
 
-    @GetMapping("/names")
+    @GetMapping
     public String namesList(Model model) {
         model.addAttribute("userInput", namesManager.getUserInput());
         model.addAttribute("namesDrawnFromUserInput", namesManager.getNamesDrawnFromUserInput());
@@ -39,20 +39,20 @@ public class NameController {
         return "index";
     }
 
-    @PostMapping("/names")
+    @PostMapping
     public String saveName(@Valid Name name, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userInput", namesManager.getUserInput());
             return "index";
         }
         namesManager.saveUserInputName(name);
-        return "redirect:/names";
+        return "redirect:/";
     }
 
     @GetMapping("/deleteLastName")
     public String deleteLastNameFromUserInput() {
         namesManager.deleteLastAddedName();
-        return "redirect:/names";
+        return "redirect:/";
     }
 
     @GetMapping("/result")
