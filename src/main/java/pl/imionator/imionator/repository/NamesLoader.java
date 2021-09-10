@@ -3,10 +3,9 @@ package pl.imionator.imionator.repository;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -58,19 +57,20 @@ public class NamesLoader {
     }
 
     private List<String> read(String resourcePath) throws URISyntaxException, IOException {
-        Path path = Paths.get(Objects.requireNonNull(getClass()
-                .getClassLoader()
-                .getResource(resourcePath))
-                .toURI());
+        final URI uri = getClass().getResource(resourcePath).toURI();
+        final Map<String, String> env = new HashMap<>();
+        final String[] array = uri.toString().split("!");
+        final FileSystem fs = FileSystems.newFileSystem(URI.create(array[0]), env);
+        final Path path = fs.getPath(array[1]);
 
         Stream<String> lines = Files.lines(path);
 
         List<String> list = lines
-                .map(this::getStreamFromLine)
-                .flatMap(Function.identity())
+                .flatMap(this::getStreamFromLine)
                 .collect(Collectors.toList());
 
         lines.close();
+        fs.close();
         return list;
     }
 
