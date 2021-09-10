@@ -15,35 +15,35 @@ import java.util.stream.Stream;
 public class NamesLoader {
 
     List<String> fillOrdinaryGirlNamesList() {
-        return readFromFile("static/names/ordinary_girl_names.txt");
+        return readFromFile("/static/names/ordinary_girl_names.txt");
     }
 
     List<String> fillUnusualGirlNamesList() {
-        return readFromFile("static/names/unusual_girl_names.txt");
+        return readFromFile("/static/names/unusual_girl_names.txt");
     }
 
     List<String> fillModernGirlNamesList() {
-        return readFromFile("static/names/modern_girl_names.txt");
+        return readFromFile("/static/names/modern_girl_names.txt");
     }
 
     List<String> fillOldFashionedGirlNamesList() {
-        return readFromFile("static/names/old_fashioned_girl_names.txt");
+        return readFromFile("/static/names/old_fashioned_girl_names.txt");
     }
 
     List<String> fillOrdinaryBoyNamesList() {
-        return readFromFile("static/names/ordinary_boy_names.txt");
+        return readFromFile("/static/names/ordinary_boy_names.txt");
     }
 
     List<String> fillUnusualBoyNamesList() {
-        return readFromFile("static/names/unusual_boy_names.txt");
+        return readFromFile("/static/names/unusual_boy_names.txt");
     }
 
     List<String> fillModernBoyNamesList() {
-        return readFromFile("static/names/modern_boy_names.txt");
+        return readFromFile("/static/names/modern_boy_names.txt");
     }
 
     List<String> fillOldFashionedBoyNamesList() {
-        return readFromFile("static/names/old_fashioned_boy_names.txt");
+        return readFromFile("/static/names/old_fashioned_boy_names.txt");
     }
 
     private List<String> readFromFile(String resourcePath) {
@@ -57,7 +57,7 @@ public class NamesLoader {
     }
 
     private List<String> read(String resourcePath) throws URISyntaxException, IOException {
-        final URI uri = getClass().getResource(resourcePath).toURI();
+        final URI uri = Objects.requireNonNull(getClass().getResource(resourcePath)).toURI();
         final Map<String, String> env = new HashMap<>();
         final String[] array = uri.toString().split("!");
         final FileSystem fs = FileSystems.newFileSystem(URI.create(array[0]), env);
