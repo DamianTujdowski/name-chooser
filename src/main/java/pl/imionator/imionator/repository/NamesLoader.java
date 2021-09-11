@@ -2,12 +2,11 @@ package pl.imionator.imionator.repository;
 
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,70 +14,53 @@ import java.util.stream.Stream;
 public class NamesLoader {
 
     List<String> fillOrdinaryGirlNamesList() {
-        return readFromFile("/static/names/ordinary_girl_names.txt");
+        return readFromFile("names/ordinary_girl_names.txt");
     }
 
     List<String> fillUnusualGirlNamesList() {
-        return readFromFile("/static/names/unusual_girl_names.txt");
+        return readFromFile("names/unusual_girl_names.txt");
     }
 
     List<String> fillModernGirlNamesList() {
-        return readFromFile("/static/names/modern_girl_names.txt");
+        return readFromFile("names/modern_girl_names.txt");
     }
 
     List<String> fillOldFashionedGirlNamesList() {
-        return readFromFile("/static/names/old_fashioned_girl_names.txt");
+        return readFromFile("names/old_fashioned_girl_names.txt");
     }
 
     List<String> fillOrdinaryBoyNamesList() {
-        return readFromFile("/static/names/ordinary_boy_names.txt");
+        return readFromFile("names/ordinary_boy_names.txt");
     }
 
     List<String> fillUnusualBoyNamesList() {
-        return readFromFile("/static/names/unusual_boy_names.txt");
+        return readFromFile("names/unusual_boy_names.txt");
     }
 
     List<String> fillModernBoyNamesList() {
-        return readFromFile("/static/names/modern_boy_names.txt");
+        return readFromFile("names/modern_boy_names.txt");
     }
 
     List<String> fillOldFashionedBoyNamesList() {
-        return readFromFile("/static/names/old_fashioned_boy_names.txt");
+        return readFromFile("names/old_fashioned_boy_names.txt");
     }
 
-    private List<String> readFromFile(String resourcePath) {
-        List<String> list = new ArrayList<>();
-        try {
-            list = read(resourcePath);
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    private List<String> readFromFile(String filePath) {
 
-    private List<String> read(String resourcePath) throws URISyntaxException, IOException {
-        final URI uri = Objects.requireNonNull(getClass().getResource(resourcePath)).toURI();
-        final Map<String, String> env = new HashMap<>();
-        final String[] array = uri.toString().split("!");
-        final FileSystem fs = FileSystems.newFileSystem(URI.create(array[0]), env);
-        final Path path = fs.getPath(array[1]);
+        InputStream input = NamesLoader.class.getClassLoader().getResourceAsStream(filePath);
+        InputStreamReader streamReader = new InputStreamReader(Objects.requireNonNull(input), StandardCharsets.UTF_8);
+        BufferedReader reader = new BufferedReader(streamReader);
 
-        Stream<String> lines = Files.lines(path);
-
-        List<String> list = lines
-                .flatMap(this::getStreamFromLine)
+        return reader.lines()
+                .flatMap(this::mapLineToStream)
                 .collect(Collectors.toList());
-
-        lines.close();
-        fs.close();
-        return list;
     }
 
-    private Stream<String> getStreamFromLine(String line) {
+    private Stream<String> mapLineToStream(String line) {
         return Arrays.stream(
-                line
-                .replaceAll("\n", "")
-                .split(", ")
+                        line
+                        .replaceAll("\\n", "")
+                        .split(", ")
         );
     }
 

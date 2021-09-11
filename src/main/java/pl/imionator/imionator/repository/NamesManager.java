@@ -14,27 +14,27 @@ import java.util.stream.Collectors;
 @SessionScope
 public class NamesManager {
 
-    private List<Name> userInput = new ArrayList<>();
+    private final List<Name> userInput = new ArrayList<>();
 
-    private List<Name> namesDrawnFromUserInput = new ArrayList<>();
+    private final List<Name> namesDrawnFromUserInput = new ArrayList<>();
 
     private List<Name> namesDrawnFromPropositionList = new ArrayList<>();
 
-    private List<String> ordinaryGirlNames;
+    private final List<String> ordinaryGirlNames;
 
-    private List<String> unusualGirlNames;
+    private final List<String> unusualGirlNames;
 
-    private List<String> modernGirlNames;
+    private final List<String> modernGirlNames;
 
-    private List<String> oldFashionedGirlNames;
+    private final List<String> oldFashionedGirlNames;
 
-    private List<String> ordinaryBoyNames;
+    private final List<String> ordinaryBoyNames;
 
-    private List<String> unusualBoyNames;
+    private final List<String> unusualBoyNames;
 
-    private List<String> modernBoyNames;
+    private final List<String> modernBoyNames;
 
-    private List<String> oldFashionedBoyNames;
+    private final List<String> oldFashionedBoyNames;
 
     public NamesManager(NamesLoader namesLoader) {
         ordinaryGirlNames = namesLoader.fillOrdinaryGirlNamesList();

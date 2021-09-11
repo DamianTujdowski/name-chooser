@@ -6,7 +6,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-@Component
 public class Name {
 
     @Size(min = 3, max = 25, message = "Imię musi posiadać od 3 do 25 liter")
