@@ -1,12 +1,12 @@
 <h1 align="center">Imionator</h1>
 <h3 align="center">App that helps future parents choose name for their baby</h3>
 <h3 align="left">Features:</h3>
-<p> 1. User can enter his name prepositions, then let app draw a name,</p>
-<p> 2. If user have no ideas, app can draw a name for him. One just have to choose sex and name category,</p>
-<p> 3. App displays statistics of drawn names, which can be saved to PDF file.</p>
+<p> 1. User can enter his name prepositions, then let app draw a name</p>
+<p> 2. If user have no ideas, app can draw a name for him. One just have to choose sex and name category</p>
+<p> 3. App display statistics of drawn names, which can be saved to PDF file</p>
 
 <h3 align="left">Try it:</h3>
-<a href="https://www.w3schools.com">Imionator</a>
+<a href="https://imionator.herokuapp.com/" target="_blank">Imionator</a>
 
 
 <h3 align="left">Tech stack:</h3>
