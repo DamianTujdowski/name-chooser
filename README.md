@@ -6,7 +6,7 @@
 <p> 3. App display statistics of drawn names, which can be saved to PDF file</p>
 
 <h3 align="left">Try it:</h3>
-<a href="https://imionator.herokuapp.com/" target="_blank">Imionator</a>
+<a target="_blank" href="https://imionator.herokuapp.com/">Imionator</a>
 
 
 <h3 align="left">Tech stack:</h3>
