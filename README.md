@@ -17,7 +17,7 @@ Having that I came up with another concepts, all listed below. One can try to ch
 <h3 align="left">Try it:</h3>
 <a target="_blank" href="https://imionator.herokuapp.com/">Imionator</a>
 
-It takes app to load about 5 seconds.
+Due to hosting (Heroku) configuration, it takes about 5 seconds to load application.
 
 <h3 align="left">Tech stack:</h3>
 <img src ="https://img.shields.io/badge/Spring Boot--green" width="120" height="28"/>
