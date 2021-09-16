@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 @Service
 public class NamesService {
 
-    private NamesManager namesManager;
+    private final NamesManager namesManager;
 
-    private PdfGenerator pdfGenerator;
+    private final PdfGenerator pdfGenerator;
 
     public NamesService(NamesManager namesManager, PdfGenerator pdfGenerator) {
         this.namesManager = namesManager;

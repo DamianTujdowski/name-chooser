@@ -22,9 +22,9 @@ import java.io.ByteArrayInputStream;
 @Controller
 public class NameController {
 
-    private NamesService namesService;
+    private final NamesService namesService;
 
-    private NamesManager namesManager;
+    private final NamesManager namesManager;
 
     public NameController(NamesService namesService, NamesManager namesManager) {
         this.namesService = namesService;

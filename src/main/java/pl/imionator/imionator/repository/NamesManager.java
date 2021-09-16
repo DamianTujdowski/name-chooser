@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 @SessionScope
 public class NamesManager {
 
-    private final List<Name> userInput = new ArrayList<>();
+    private final List<Name> userInput;
 
-    private final List<Name> namesDrawnFromUserInput = new ArrayList<>();
+    private final List<Name> namesDrawnFromUserInput;
 
-    private List<Name> namesDrawnFromPropositionList = new ArrayList<>();
+    private final List<Name> namesDrawnFromPropositionList;
 
     private final List<String> ordinaryGirlNames;
 
@@ -37,6 +37,9 @@ public class NamesManager {
     private final List<String> oldFashionedBoyNames;
 
     public NamesManager(NamesLoader namesLoader) {
+        userInput = new ArrayList<>();
+        namesDrawnFromUserInput = new ArrayList<>();
+        namesDrawnFromPropositionList = new ArrayList<>();
         ordinaryGirlNames = namesLoader.fillOrdinaryGirlNamesList();
         unusualGirlNames = namesLoader.fillUnusualGirlNamesList();
         modernGirlNames = namesLoader.fillModernGirlNamesList();
@@ -70,9 +73,11 @@ public class NamesManager {
     }
 
     public void deleteNameDrawnFromPropositionList(String name) {
-        namesDrawnFromPropositionList = namesDrawnFromPropositionList.stream()
-                .filter(n -> !n.getFirstName().equals(name))
-                .collect(Collectors.toList());
+        Name nameToRemove = namesDrawnFromPropositionList.stream()
+                .filter(n -> n.getFirstName().equals(name))
+                .findFirst()
+                .orElse(new Name());
+        namesDrawnFromPropositionList.remove(nameToRemove);
     }
 
     public void removeNamesDrawnFromUserInput() {
@@ -80,21 +85,10 @@ public class NamesManager {
     }
 
     public void filterNamesDrawnFromPropositionListBySex(Sex sex) {
-        namesDrawnFromPropositionList = namesDrawnFromPropositionList.stream()
-                .filter(name -> name.getSex() != sex)
+        List<Name> namesToRemoveBySex = namesDrawnFromPropositionList.stream()
+                .filter(name -> name.getSex() == sex)
                 .collect(Collectors.toList());
-    }
-
-    public List<Name> getUserInput() {
-        return userInput;
-    }
-
-    public List<Name> getNamesDrawnFromUserInput() {
-        return namesDrawnFromUserInput;
-    }
-
-    public List<Name> getNamesDrawnFromPropositionList() {
-        return namesDrawnFromPropositionList;
+        namesDrawnFromPropositionList.removeAll(namesToRemoveBySex);
     }
 
     public void removeDrawnNameFromPropositions(NameCategory nameCategory, Sex sex, String randomName) {
@@ -148,5 +142,17 @@ public class NamesManager {
                 break;
         }
         return names;
+    }
+
+    public List<Name> getUserInput() {
+        return userInput;
+    }
+
+    public List<Name> getNamesDrawnFromUserInput() {
+        return namesDrawnFromUserInput;
+    }
+
+    public List<Name> getNamesDrawnFromPropositionList() {
+        return namesDrawnFromPropositionList;
     }
 }
