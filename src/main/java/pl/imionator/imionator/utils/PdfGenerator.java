@@ -20,28 +20,49 @@ import java.util.stream.Collectors;
 @Component
 public class PdfGenerator {
 
+    public ByteArrayInputStream generatePdf(Map<String, Long> namesFromUserInputStatistics,
+                                            List<Name> namesDrawnFromPropositionLists) {
 
-    public ByteArrayInputStream generatePdf(Map<String, Long> namesFromUserInputStatistics, List<Name> namesDrawnFromPropositionLists) {
         Document document = new Document(setDocumentSizeAndBackgroundColor());
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
         try {
             Font headerFont = generateHeaderFont(), bodyFont = generateBodyFont();
             PdfWriter.getInstance(document, byteArrayOutputStream);
             document.open();
+
             if (namesFromUserInputStatistics.size() > 0) {
                 document.add(generateTitleForNamesFromUserInputStatistics(headerFont));
-                document.add(generateTableForNamesFromUserInputStatistics(namesFromUserInputStatistics, headerFont, bodyFont));
+                document.add(generateTableForNamesFromUserInputStatistics(
+                        namesFromUserInputStatistics,
+                        headerFont,
+                        bodyFont));
             }
-            if (namesDrawnFromPropositionListBySex(namesDrawnFromPropositionLists, name -> name.getSex() == Sex.GIRL).size() > 0) {
-                document.add(generateTitleForNamesDrawnFromPropositionLists(new Paragraph("Dziewczęce imiona wylosowane spośród propozycji:", headerFont)));
+
+            List<Name> girlsNames = filterNamesDrawnFromPropositionListBySex(
+                    namesDrawnFromPropositionLists,
+                    name -> name.getSex() == Sex.GIRL);
+            if (girlsNames.size() > 0) {
+                document.add(generateTitleForNamesDrawnFromPropositionLists(
+                        new Paragraph("Dziewczęce imiona wylosowane spośród propozycji:",
+                                headerFont)));
                 document.add(generateTableForNamesDrawnFromPropositionListStatistics(
-                        namesDrawnFromPropositionListBySex(namesDrawnFromPropositionLists, name -> name.getSex() == Sex.GIRL), bodyFont));
+                        girlsNames,
+                        bodyFont));
             }
-            if (namesDrawnFromPropositionListBySex(namesDrawnFromPropositionLists, name -> name.getSex() == Sex.BOY).size() > 0) {
-                document.add(generateTitleForNamesDrawnFromPropositionLists(new Paragraph("Chłopięce imiona wylosowane spośród propozycji:", headerFont)));
+
+            List<Name> boysNames = filterNamesDrawnFromPropositionListBySex(
+                    namesDrawnFromPropositionLists,
+                    name -> name.getSex() == Sex.BOY);
+            if (boysNames.size() > 0) {
+                document.add(generateTitleForNamesDrawnFromPropositionLists(
+                        new Paragraph("Chłopięce imiona wylosowane spośród propozycji:",
+                                headerFont)));
                 document.add(generateTableForNamesDrawnFromPropositionListStatistics(
-                        namesDrawnFromPropositionListBySex(namesDrawnFromPropositionLists, name -> name.getSex() == Sex.BOY), bodyFont));
+                        boysNames,
+                        bodyFont));
             }
+
             document.close();
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
@@ -49,7 +70,9 @@ public class PdfGenerator {
         return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
     }
 
-    private PdfPTable generateTableForNamesFromUserInputStatistics(Map<String, Long> drawnNamesFromUserInputStatistics, Font headerFont, Font bodyFont) {
+    private PdfPTable generateTableForNamesFromUserInputStatistics(Map<String, Long> drawnNamesFromUserInputStatistics,
+                                                                   Font headerFont,
+                                                                   Font bodyFont) {
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(60);
 
@@ -63,10 +86,15 @@ public class PdfGenerator {
         return table;
     }
 
-    private PdfPTable generateTableForNamesDrawnFromPropositionListStatistics(List<Name> namesDrawnFromPropositionList, Font bodyFont) {
+    private PdfPTable generateTableForNamesDrawnFromPropositionListStatistics(List<Name> namesDrawnFromPropositionList,
+                                                                              Font bodyFont) {
         PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(60);
-        namesDrawnFromPropositionList.forEach(name -> table.addCell(generateBodyCell(name.getFirstName(), name.getSex(), bodyFont)));
+        namesDrawnFromPropositionList.forEach(name -> table.addCell(
+                generateBodyCell(
+                        name.getFirstName(),
+                        name.getSex(),
+                        bodyFont)));
         return table;
     }
 
@@ -88,7 +116,7 @@ public class PdfGenerator {
         PdfPCell cell = new PdfPCell(new Phrase(data, bodyFont));
         if (sex == Sex.BOY) {
             cell.setBackgroundColor(new BaseColor(0, 151, 255));
-        } else if (sex == Sex.GIRL) {
+        } else {
             cell.setBackgroundColor(new BaseColor(170, 0, 204));
         }
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -103,17 +131,31 @@ public class PdfGenerator {
     }
 
     private Font generateHeaderFont() throws DocumentException, IOException {
-        return new Font(BaseFont.createFont("Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),
-                12, Font.BOLD, BaseColor.WHITE);
+        return new Font(
+                BaseFont.createFont(
+                        "Roboto-Regular.ttf",
+                        BaseFont.IDENTITY_H,
+                        BaseFont.EMBEDDED),
+                12,
+                Font.BOLD,
+                BaseColor.WHITE);
     }
 
     private Font generateBodyFont() throws DocumentException, IOException {
-        return new Font(BaseFont.createFont("Roboto-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED),
-                12, Font.NORMAL, BaseColor.WHITE);
+        return new Font(
+                BaseFont.createFont(
+                        "Roboto-Regular.ttf",
+                        BaseFont.IDENTITY_H,
+                        BaseFont.EMBEDDED),
+                12,
+                Font.NORMAL,
+                BaseColor.WHITE);
     }
 
     private Paragraph generateTitleForNamesFromUserInputStatistics(Font headerFont) {
-        Paragraph userInputTitle = new Paragraph("Imiona wylosowane spośród imion podanych przez Ciebie:", headerFont);
+        Paragraph userInputTitle = new Paragraph(
+                "Imiona wylosowane spośród imion podanych przez Ciebie:",
+                headerFont);
         userInputTitle.setAlignment(Element.ALIGN_CENTER);
         userInputTitle.setSpacingBefore(5);
         userInputTitle.setSpacingAfter(10);
@@ -127,7 +169,7 @@ public class PdfGenerator {
         return paragraph;
     }
 
-    private List<Name> namesDrawnFromPropositionListBySex(List<Name> names, Predicate<Name> predicate) {
+    private List<Name> filterNamesDrawnFromPropositionListBySex(List<Name> names, Predicate<Name> predicate) {
         return names.stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
